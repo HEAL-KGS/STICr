@@ -8,6 +8,9 @@
 
 tidy_hobo_data <- function(infile, outfile = FALSE) {  
   
+  # confirm file exists
+  if (!file.exists(infile)) stop("File not found - check that path to infile is correct")
+  
   # read in file
   raw_data <- read.csv(infile, 
                        skip = 1)

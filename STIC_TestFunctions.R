@@ -7,8 +7,8 @@ library(lubridate)
 
 ## Step 1: Tidy HOBO data
 source("tidy_hobo_data.R")  # load function
-raw_hobo_infile <- file.path("TestData", "STIC", "20946489_Raw.csv")
-tidy_hobo_outfile <- file.path("TestData", "STIC", "20946489_Tidy.csv")
+raw_hobo_infile <- file.path("data", "TestData_20946471_Raw.csv")
+tidy_hobo_outfile <- file.path("data", "TestData_20946471_Clean.csv")
 
 tidy_data <- tidy_hobo_data(infile = raw_hobo_infile) # test with no saved output
 head(tidy_data)
@@ -17,9 +17,6 @@ tidy_data <- tidy_hobo_data(infile = raw_hobo_infile, outfile = tidy_hobo_outfil
 
 head(tidy_data)
 file.exists(tidy_hobo_outfile)
-
-# bringing in input
-stic_data <- tidy_hobo_data("C:/Users/cwhee/Desktop/R_Directory/AIMS_hydro_qaqc/youngmeyer_stics_round_1/20946471_ENM305.csv")
 
 ## Step 2: Get calibration
 

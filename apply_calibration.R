@@ -1,17 +1,18 @@
 # apply_calibration.R
-#inputs: calibration (a model object) and a data frame with columns labeled "datetime", "temperature" "conductivity_uncal"
-# output: same data frame as input, except with a new column called "spc"
+# inputs: 
+#  - raw_stic_data = A data frame with a column named `conductivity_uncal`, for example as produced by the function `tidy_hobo_data`.
+#  - calibration = a model object relating `conductivity_uncal` to a standard of some sort, for example as produced by the function `get_calibration`.
+# output: same data frame as input, except with a new column called `SpC`. This will be in the same units as the data used to develop the model calibration.
 
-apply_calibration <- function(input, calibration) {
+apply_calibration <- function(stic_data, calibration) {
   
-  just_cond <- input %>% 
-    select(conductivity_uncal)
+  # apply fitted model to STIC data
+  just_spc <- predict(object = calibration, newdata = stic_data)
   
-  just_spc <- predict(calibration, just_cond)
+  # add new column to data frame
+  stic_data$SpC <- just_spc
   
-  input$spc <- just_spc
-  
-  return(input)
+  return(stic_data)
   
 }
 

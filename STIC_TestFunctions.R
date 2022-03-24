@@ -27,8 +27,12 @@ cal_fit <- get_calibration(cal_input, method = "linear")
 summary(cal_fit)
 
 ## Step 3: Apply calibration
+source("apply_calibration.R")  # load function
 
-stic_data_with_spc <- apply_calibration(input = stic_data, calibration = calibration)
+tidy_data_with_spc <- apply_calibration(stic_data = tidy_data, calibration = cal_fit)
+
+head(tidy_data_with_spc)
+plot(tidy_data_with_spc$conductivity_uncal, tidy_data_with_spc$SpC)
 
 # Step 4: Classify
 

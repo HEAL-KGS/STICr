@@ -23,16 +23,25 @@ source("get_calibration.R")  # load function
 cal_input <- read_csv(file.path("data", "TestData_20946471_Calibration.csv"))
 head(cal_input)
 
-cal_fit <- get_calibration(cal_input, method = "linear")
-summary(cal_fit)
+cal_fit_lin <- get_calibration(cal_input, method = "linear")
+summary(cal_fit_lin)
+
+cal_fit_exp <- get_calibration(cal_input, method = "exponential")
+summary(cal_fit_exp)
 
 ## Step 3: Apply calibration
 source("apply_calibration.R")  # load function
 
-tidy_data_with_spc <- apply_calibration(stic_data = tidy_data, calibration = cal_fit)
+tidy_data_with_spc <- apply_calibration(stic_data = tidy_data, calibration = cal_fit_lin) # default linear
 
 head(tidy_data_with_spc)
 plot(tidy_data_with_spc$conductivity_uncal, tidy_data_with_spc$SpC)
+
+tidy_data_with_spc_exp <- apply_calibration(stic_data = tidy_data, calibration = cal_fit_exp) # check exponential
+
+head(tidy_data_with_spc_exp)
+plot(tidy_data_with_spc_exp$conductivity_uncal, tidy_data_with_spc_exp$SpC)
+
 
 # Step 4: Classify
 

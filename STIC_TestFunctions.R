@@ -19,17 +19,12 @@ head(tidy_data)
 file.exists(tidy_hobo_outfile)
 
 ## Step 2: Get calibration
+source("get_calibration.R")  # load function
+cal_input <- read_csv(file.path("data", "TestData_20946471_Calibration.csv"))
+head(cal_input)
 
-cal_points <- read_csv("cal_points.csv")
-
-cal_points <- cal_points %>% 
-  rename(standard = std_val) %>% 
-  rename(conductivity_uncal = measured_val)
-
-calibration_data <- cal_points
-
-calibration <- get_calibration(calibration_data, method = "linear")
-
+cal_fit <- get_calibration(cal_input, method = "linear")
+summary(cal_fit)
 
 ## Step 3: Apply calibration
 

@@ -2,7 +2,7 @@
 title: "STIC data processing and report"
 author: "Christopher Wheeler"
 date: "4/6/2022"
-output:  rmarkdown::github_document
+output = github_document
 ---
 
 ```{r setup, include=FALSE}

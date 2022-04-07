@@ -2,7 +2,7 @@
 title: "STIC data processing and report"
 author: "Christopher Wheeler"
 date: "4/6/2022"
-output:  html_document:
+output:  md_document:
     keep_md: true
 ---
 

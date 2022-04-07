@@ -2,8 +2,7 @@
 title: "STIC data processing and report"
 author: "Christopher Wheeler"
 date: "4/6/2022"
-output:  md_document:
-    keep_md: true
+output:  rmarkdown::github_document
 ---
 
 ```{r setup, include=FALSE}

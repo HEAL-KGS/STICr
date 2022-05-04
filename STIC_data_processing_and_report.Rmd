@@ -2,7 +2,7 @@
 title: "STIC data processing and report"
 author: "Christopher Wheeler"
 date: "4/6/2022"
-output = github_document
+output: html_document
 ---
 
 ```{r setup, include=FALSE}
@@ -98,7 +98,7 @@ Now Step 3: Apply calibration. The function take the current data frame and mode
 
 ```{r Testing_3}
 
-stic_data_with_spc <- apply_calibration(input = stic_data, calibration = calibration)
+stic_data_with_spc <- apply_calibration(stic_data, calibration)
 
 head(stic_data_with_spc)
 ```
@@ -106,7 +106,7 @@ Final step: using the classify_wetdry function to create another column with the
 
 ```{r Testing_4}
 
-classified <- classify_wetdry(stic_data_with_spc, threshold = 50)
+classified <- classify_wetdry(stic_data_with_spc,classify_var = "spc", threshold = 50)
 
 head(classified)
 

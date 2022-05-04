@@ -10,7 +10,7 @@ apply_calibration <- function(stic_data, calibration) {
   just_spc <- predict(object = calibration, newdata = stic_data)
   
   # add new column to data frame
-  stic_data$SpC <- just_spc
+  stic_data$spc <- just_spc
   
   return(stic_data)
   

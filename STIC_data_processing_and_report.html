@@ -247,7 +247,7 @@ summary(calibration)</code></pre>
 ## Multiple R-squared:  0.9047, Adjusted R-squared:  0.8571 
 ## F-statistic: 18.99 on 1 and 2 DF,  p-value: 0.04884</code></pre>
 <p>Now Step 3: Apply calibration. The function take the current data frame and model object, then adds a new “real” spc column to data frame</p>
-<pre class="r"><code>stic_data_with_spc &lt;- apply_calibration(input = stic_data, calibration = calibration)
+<pre class="r"><code>stic_data_with_spc &lt;- apply_calibration(stic_data, calibration)
 
 head(stic_data_with_spc)</code></pre>
 <pre><code>##              datetime conductivity_uncal temperature       spc
@@ -258,7 +258,7 @@ head(stic_data_with_spc)</code></pre>
 ## 5 2021-07-16 18:00:00              118.4      33.953 -275.3883
 ## 6 2021-07-16 18:15:00              150.7      32.497 -275.0502</code></pre>
 <p>Final step: using the classify_wetdry function to create another column with the binary, classified data. Default threshold is 1000 for conductivity_uncal</p>
-<pre class="r"><code>classified &lt;- classify_wetdry(stic_data_with_spc, threshold = 50)
+<pre class="r"><code>classified &lt;- classify_wetdry(stic_data_with_spc,classify_var = &quot;spc&quot;, threshold = 50)
 
 head(classified)</code></pre>
 <pre><code>##              datetime conductivity_uncal temperature       spc wetdry

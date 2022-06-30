@@ -19,6 +19,6 @@ tidy_hobo_data
 }
 \examples{
 clean_data <- tidy_hobo_data(infile = "https://raw.githubusercontent.com/HEAL-KGS/STICr/main/data/raw_hobo_data.csv", outfile = FALSE)
-head(tidy_data)
+head(clean_data)
 
 }

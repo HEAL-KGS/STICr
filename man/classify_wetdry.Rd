@@ -23,5 +23,4 @@ classify_wetdry
 stic_data <- TestData_20946471_Calibrated
 classified_df <- classify_wetdry(stic_data, classify_var = "spc", threshold = 200)
 head(classified_df)
-
 }

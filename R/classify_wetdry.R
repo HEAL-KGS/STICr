@@ -6,12 +6,10 @@
 #' @param threshold An absolute numerical threshold for classifying wet vs dry
 #'
 #' @return The same data frame as input, but with a new column called wetdry
-#'
+#' @export
 #' @examples stic_data <- TestData_20946471_Calibrated
 #' classified_df <- classify_wetdry(stic_data, classify_var = "spc", threshold = 200)
 #' head(classified_df)
-#'
-#' @export
 classify_wetdry <- function(stic_data, classify_var = "spc", threshold = 200) {
 
   # extract classify variable

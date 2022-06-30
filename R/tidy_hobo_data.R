@@ -6,13 +6,11 @@
 #' @return a tidied data frame
 #' @export
 #'
-#' @examples tidy_df <- tidy_hobo_data("data/TestData_20946471_Raw.csv")
+#' @examples
+#' tidy_df <- tidy_hobo_data(infile = "https://raw.githubusercontent.com/HEAL-KGS/STICr/main/data/TestData_20946471_Raw.csv", outfile = FALSE)
 #' head(tidy_df)
 #'
 tidy_hobo_data <- function(infile, outfile = FALSE) {
-
-  # confirm file exists
-  if (!file.exists(infile)) stop("File not found - check that path to infile is correct")
 
   # read in file
   raw_data <- read.csv(infile,

@@ -7,8 +7,8 @@
 #' @export
 #'
 #' @examples
-#' tidy_df <- tidy_hobo_data(infile = "https://raw.githubusercontent.com/HEAL-KGS/STICr/main/data/TestData_20946471_Raw.csv", outfile = FALSE)
-#' head(tidy_df)
+#' tidy_stic_data <- tidy_hobo_data(infile = "https://raw.githubusercontent.com/HEAL-KGS/STICr/main/data/raw_hobo_data.csv", outfile = FALSE)
+#' head(tidy_stic_data)
 #'
 
 tidy_hobo_data <- function(infile, outfile = FALSE) {

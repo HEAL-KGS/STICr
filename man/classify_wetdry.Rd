@@ -14,7 +14,7 @@ classify_wetdry(stic_data, classify_var = "spc", threshold = 200)
 \item{threshold}{An absolute numerical threshold for classifying wet vs dry}
 }
 \value{
-The same data frame as input, but with a new column called wetdry
+The same data frame as input, but with a new column called `wetdry`.
 }
 \description{
 classify_wetdry

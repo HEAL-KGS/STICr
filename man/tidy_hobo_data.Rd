@@ -7,9 +7,9 @@
 tidy_hobo_data(infile, outfile = FALSE)
 }
 \arguments{
-\item{infile}{filename (including path if needed) for the raw HOBO data on your computer.}
+\item{infile}{filename (including path or URL if needed) for a raw CSV file exported from HOBOware.}
 
-\item{outfile}{filename (including path if needed) to save the tidied. Defaults to FALSE, in which case tidied data will not be saved.}
+\item{outfile}{filename (including path if needed) to save the tidied data frame. Defaults to FALSE, in which case tidied data will not be saved.}
 }
 \value{
 a tidied data frame
@@ -18,7 +18,7 @@ a tidied data frame
 tidy_hobo_data
 }
 \examples{
-tidy_df <- tidy_hobo_data(infile = "https://raw.githubusercontent.com/HEAL-KGS/STICr/main/data/TestData_20946471_Raw.csv", outfile = FALSE)
-head(tidy_df)
+tidy_stic_data <- tidy_hobo_data(infile = "https://raw.githubusercontent.com/HEAL-KGS/STICr/main/data/raw_hobo_data.csv", outfile = FALSE)
+head(tidy_stic_data)
 
 }

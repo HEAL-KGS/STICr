@@ -20,7 +20,7 @@ The same data frame as input, but with a new column called wetdry
 classify_wetdry
 }
 \examples{
-stic_data <- read.csv("data/TestData_20946471_Calibrated.csv")
+stic_data <- TestData_20946471_Calibrated
 classified_df <- classify_wetdry(stic_data, classify_var = "spc", threshold = 200)
 head(classified_df)
 

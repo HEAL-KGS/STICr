@@ -18,7 +18,7 @@ fitted model object
 get_calibration
 }
 \examples{
-calibration_data <- TestData_20946471_Calibration
+calibration_data <- calibration_standard_data
 lm_calibration <- get_calibration(calibration_data, method = "linear")
 View(lm_calibration)
 

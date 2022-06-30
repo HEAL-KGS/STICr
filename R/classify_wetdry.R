@@ -7,7 +7,7 @@
 #'
 #' @return The same data frame as input, but with a new column called `wetdry`.
 #' @export
-#' @examples stic_data <- TestData_20946471_Calibrated
+#' @examples stic_data <- calibrated_stic_data
 #' classified_df <- classify_wetdry(stic_data, classify_var = "spc", threshold = 200)
 #' head(classified_df)
 classify_wetdry <- function(stic_data, classify_var = "spc", threshold = 200) {

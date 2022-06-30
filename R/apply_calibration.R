@@ -4,8 +4,13 @@
 #' @param calibration a model object relating `conductivity_uncal` to a standard of some sort, for example as produced by the function `get_calibration`.
 #'
 #' @return The same data frame as input, except with a new column called `SpC`. This will be in the same units as the data used to develop the model calibration.
-
 #' @export
+#'
+#' @examples stic_data <- read.csv("data/TestData_20946471_Clean.csv")
+#' calibration_data <- read.csv("data/TestData_20946471_Calibration.csv")
+#' calibration <- get_calibration(calibration_data, method = "linear")
+#' calibrated_df <- apply_calibration(stic_data, calibration)
+#' head(calibrated_df)
 #'
 apply_calibration <- function(stic_data, calibration) {
 

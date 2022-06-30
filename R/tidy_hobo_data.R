@@ -6,9 +6,8 @@
 #' @return a tidied data frame
 #' @export
 #'
-#' @examples df <- TestData_20946471_Raw
-#' df <- tidy_hobo_data(df)
-#' head(df)
+#' @examples tidy_df <- tidy_hobo_data("data/TestData_20946471_Raw.csv")
+#' head(tidy_df)
 #'
 tidy_hobo_data <- function(infile, outfile = FALSE) {
 

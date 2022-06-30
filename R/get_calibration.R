@@ -6,6 +6,10 @@
 #' @return fitted model object
 #' @export
 #'
+#' @examples calibration_data <- data(TestData_20946471_Calibration)
+#' lm_calibration <- get_calibration(calibration_data, method = "linear")
+#' View(lm_calibration)
+#'
 get_calibration <- function(calibration_data, method = "linear") {
 
   if (method == "exponential") {

@@ -18,8 +18,7 @@ a tidied data frame
 tidy_hobo_data
 }
 \examples{
-df <- TestData_20946471_Raw
-df <- tidy_hobo_data(df)
-head(df)
+tidy_df <- tidy_hobo_data("data/TestData_20946471_Raw.csv")
+head(tidy_df)
 
 }

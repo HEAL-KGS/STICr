@@ -28,7 +28,7 @@ tidy_hobo_data <- function(infile, outfile = FALSE) {
                        .fn = function(x){"datetime"}) |>
     dplyr::select(datetime, conductivity_uncal, temperature) |>
     dplyr::mutate(datetime = as.character(datetime)) |>
-    dplyr::mutate(datetime = lubridate::mdy_hms(datetime),
+    dplyr::mutate(datetime = lubridate::mdy_hm(datetime),
                   temperature = as.numeric(temperature),
                   conductivity_uncal = as.numeric(conductivity_uncal))
 

@@ -7,7 +7,7 @@
 #' @export
 #'
 #' @examples
-#' tidy_data <- tidy_hobo_data(infile = "https://raw.githubusercontent.com/HEAL-KGS/STICr/main/data/raw_hobo_data.csv", outfile = FALSE)
+#' clean_data <- tidy_hobo_data(infile = "https://raw.githubusercontent.com/HEAL-KGS/STICr/main/data/raw_hobo_data.csv", outfile = FALSE)
 #' head(tidy_data)
 #'
 
@@ -27,7 +27,7 @@ tidy_hobo_data <- function(infile, outfile = FALSE) {
     dplyr::rename_with(.cols = contains("Date"),
                        .fn = function(x){"datetime"}) |>
     dplyr::select(datetime, conductivity_uncal, temperature) |>
-    dplyr::mutate(datetime = lubridate::mdy_hm(datetime),
+    dplyr::mutate(datetime = lubridate::mdy_hms(datetime),
                   temperature = as.numeric(temperature),
                   conductivity_uncal = as.numeric(conductivity_uncal))
 

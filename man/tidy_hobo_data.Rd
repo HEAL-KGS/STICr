@@ -18,7 +18,7 @@ a tidied data frame
 tidy_hobo_data
 }
 \examples{
-tidy_data <- tidy_hobo_data(infile = "https://raw.githubusercontent.com/HEAL-KGS/STICr/main/data/raw_hobo_data.csv", outfile = FALSE)
+clean_data <- tidy_hobo_data(infile = "https://raw.githubusercontent.com/HEAL-KGS/STICr/main/data/raw_hobo_data.csv", outfile = FALSE)
 head(tidy_data)
 
 }

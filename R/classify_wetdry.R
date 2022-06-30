@@ -12,6 +12,7 @@
 #' classified_df <- classify_wetdry(stic_data, classify_var = "spc", threshold = 200)
 #' head(classified_df)
 #'
+#'
 classify_wetdry <- function(stic_data, classify_var = "spc", threshold = 200) {
 
   # extract classify variable

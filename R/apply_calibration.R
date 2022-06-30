@@ -6,8 +6,8 @@
 #' @return The same data frame as input, except with a new column called `SpC`. This will be in the same units as the data used to develop the model calibration.
 #' @export
 #'
-#' @examples stic_data <- read.csv("data/TestData_20946471_Clean.csv")
-#' calibration_data <- read.csv("data/TestData_20946471_Calibration.csv")
+#' @examples stic_data <- TestData_20946471_Clean
+#' calibration_data <- TestData_20946471_Calibration
 #' calibration <- get_calibration(calibration_data, method = "linear")
 #' calibrated_df <- apply_calibration(stic_data, calibration)
 #' head(calibrated_df)

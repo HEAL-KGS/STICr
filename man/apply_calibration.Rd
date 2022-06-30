@@ -18,8 +18,8 @@ The same data frame as input, except with a new column called `SpC`. This will b
 apply_calibration
 }
 \examples{
-stic_data <- read.csv("data/TestData_20946471_Clean.csv")
-calibration_data <- read.csv("data/TestData_20946471_Calibration.csv")
+stic_data <- TestData_20946471_Clean
+calibration_data <- TestData_20946471_Calibration
 calibration <- get_calibration(calibration_data, method = "linear")
 calibrated_df <- apply_calibration(stic_data, calibration)
 head(calibrated_df)

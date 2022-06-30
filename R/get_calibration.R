@@ -6,7 +6,7 @@
 #' @return fitted model object
 #' @export
 #'
-#' @examples calibration_data <- read.csv("data/TestData_20946471_Calibration.csv")
+#' @examples calibration_data <- TestData_20946471_Calibration
 #' lm_calibration <- get_calibration(calibration_data, method = "linear")
 #' View(lm_calibration)
 #'

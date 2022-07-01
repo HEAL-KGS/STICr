@@ -12,10 +12,10 @@ tidy_hobo_data(infile, outfile = FALSE)
 \item{outfile}{filename (including path if needed) to save the tidied data frame. Defaults to FALSE, in which case tidied data will not be saved.}
 }
 \value{
-a tidied data frame
+a tidied data frame with the following column names: datetime, conductivity_uncal, temperature
 }
 \description{
-tidy_hobo_data
+This function loads raw HOBO STIC files and cleans up columns and headers
 }
 \examples{
 clean_data <- tidy_hobo_data(infile = "https://raw.githubusercontent.com/HEAL-KGS/STICr/main/data/raw_hobo_data.csv", outfile = FALSE)

@@ -1,9 +1,12 @@
 #' tidy_hobo_data
 #'
+#' @description This function loads raw HOBO STIC files and cleans up columns and headers
+# to produce a tidy data frame and/or CSV output.
+#'
 #' @param infile filename (including path or URL if needed) for a raw CSV file exported from HOBOware.
 #' @param outfile filename (including path if needed) to save the tidied data frame. Defaults to FALSE, in which case tidied data will not be saved.
 #'
-#' @return a tidied data frame
+#' @return a tidied data frame with the following column names: datetime, conductivity_uncal, temperature
 #' @export
 #'
 #' @examples

@@ -12,10 +12,10 @@ get_calibration(calibration_data, method = "linear")
 \item{method}{method for creating interpolation: "linear" (default) or "exponential"}
 }
 \value{
-fitted model object
+A fitted model object relating SpC to the uncalibrated conductivity values measured by the STIC
 }
 \description{
-get_calibration
+Function to fit SpC standards and uncalibrated conductivity measured by the STIC to a model object. This model will then be used to predict SpC values using 'apply_calibration'
 }
 \examples{
 calibration_data <- calibration_standard_data

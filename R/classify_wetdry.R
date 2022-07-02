@@ -1,5 +1,7 @@
 #' classify_wetdry
 #'
+#' @description This is a function to classify STIC data into a binary "wet" and "dry" column. Data can be classified according to any classification variable defined by the user. User can choose one of two methods for classification: either an absolute numerical threshold or as a chosen percentage of the maximum value of the classification variable.
+#'
 #' @param stic_data A data frame with STIC data, such as that produced by `apply_calibration` or `tidy_hobo_data`
 #' @param classify_var A column name of the column in data frame you want to use for classification.
 #                   Defaults to "SpC" which would be the output from `apply_calibration` function.

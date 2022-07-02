@@ -15,7 +15,7 @@ tidy_hobo_data(infile, outfile = FALSE)
 a tidied data frame with the following column names: datetime, conductivity_uncal, temperature
 }
 \description{
-This function loads raw HOBO STIC files and cleans up columns and headers
+This function loads raw HOBO STIC CSV files and cleans up columns and headers
 }
 \examples{
 clean_data <- tidy_hobo_data(infile = "https://raw.githubusercontent.com/HEAL-KGS/STICr/main/data/raw_hobo_data.csv", outfile = FALSE)

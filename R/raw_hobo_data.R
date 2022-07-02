@@ -1,15 +1,15 @@
-#' TestData_20946471_Raw
+#' raw_hobo_data
 #'
 #' Raw HOBO data for one STIC
 #'
 #' @docType data
 #'
-#' @usage data(TestData_20946471_Raw)
+#' @usage data(raw_hobo_data)
 #'
 #'
 #' @keywords datasets
 #'
 #'
 #' @examples
-#' data(TestData_20946471_Raw)
+#' data(raw_hobo_data)
 

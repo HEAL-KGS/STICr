@@ -1,15 +1,15 @@
-#' TestData_20946471_Clean
+#' tidy_stic_data
 #'
 #' Tidied STIC data (output of the function 'tidy_hobo_data')
 #'
 #' @docType data
 #'
-#' @usage data(TestData_20946471_Clean)
+#' @usage data(tidy_stic_data)
 #'
 #'
 #' @keywords datasets
 #'
 #'
 #' @examples
-#' data(TestData_20946471_Raw)
+#' data(tidy_stic_data)
 

@@ -1,6 +1,6 @@
 Package: STICr
 Type: Package
-Title: What the Package Does (Title Case)
+Title: A collection of functions for tidying and processing raw data from Stream Temperature, Intermittency, and Conductivity (STIC) loggers
 Version: 0.1.0
 Author: Christopher T. Wheeler, Sam Zipper, Stephen Cook
 Maintainer: Christopher Wheeler <christopher.wheeler@ku.edu>

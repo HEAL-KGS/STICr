@@ -4,7 +4,7 @@ Title: A collection of functions for tidying and processing raw data from Stream
 Version: 0.1.0
 Author: Christopher T. Wheeler, Sam Zipper, Stephen Cook
 Maintainer: Christopher Wheeler <christopher.wheeler@ku.edu>
-Description: A collection of functions for tidying and processing raw data from Stream Temperature, Intermittency, and Conductivity (STIC) loggers
+Description: This package includes a collection of functions for tidying and processing raw data from Stream Temperature, Intermittency, and Conductivity (STIC) loggers. These include functions for tidying the raw data from the loggers (tidy_hobo_data), creating a calibration model object from calibration standard data (get_calibration), apply this object to generate a column for specific conductivity (apply_calibration), and create a binary wet/dry column (classify_wetdry).
 License: AGPL-3.0 
 Encoding: UTF-8
 LazyData: true

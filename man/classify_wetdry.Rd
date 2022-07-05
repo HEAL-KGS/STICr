@@ -4,7 +4,12 @@
 \alias{classify_wetdry}
 \title{classify_wetdry}
 \usage{
-classify_wetdry(stic_data, classify_var = "spc", threshold = 200)
+classify_wetdry(
+  stic_data,
+  classify_var = "spc",
+  threshold = 200,
+  method = "absolute"
+)
 }
 \arguments{
 \item{stic_data}{A data frame with STIC data, such as that produced by `apply_calibration` or `tidy_hobo_data`}

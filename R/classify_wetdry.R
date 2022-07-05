@@ -13,21 +13,22 @@
 #' @examples stic_data <- calibrated_stic_data
 #' classified_df <- classify_wetdry(stic_data, classify_var = "spc", method = "absolute", threshold = 200)
 #' head(classified_df)
-classify_wetdry <- function(stic_data, classify_var = "spc", threshold = 200) {
+classify_wetdry <- function(stic_data, classify_var = "spc", threshold = 200, method = "absolute") {
 
   # extract classify variable
-  if (!(classify_var %in% names(stic_data))) stop(paste0("classify_var input (", classify_var, ") is not present in stic_data"))
-  class_var <- stic_data[ ,classify_var]
+ #if (!(classify_var %in% names(stic_data))) stop(paste0("classify_var input (", classify_var, ") is not present in stic_data"))
 
-  if (method == "absolute") {
+ class_var <- stic_data[ ,classify_var]
 
-    # classify and add to data frame
-    stic_data$wetdry <- if_else(class_var >= threshold, "wet", "dry" )
-
-  } else if (method == "percent") {
+  if (method == "percent") {
 
     # classify and add to data frame
-    stic_data$wetdry <- if_else(class_var >= threshold * max(class_var, na.rm = TRUE), "wet", "dry" )
+    stic_data$wetdry <- if_else(classify_var >= (threshold * max(classify_var)), "wet", "dry" )
+
+  } else if (method == "absolute") {
+
+    #classify and add to data frame
+    stic_data$wetdry <- if_else(classify_var >= threshold, "wet", "dry" )
 
   } else {
 

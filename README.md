@@ -152,7 +152,7 @@ versus dry periods.
 
 ``` r
 library(ggplot2)
-ggplot(classified_df, aes(x = datetime, y = spc, color = wetdry, group = 2)) +
+ggplot(classified_df, aes(x = datetime, y = spc, color = wetdry, group = 1)) +
   geom_path(size = 1)
 ```
 

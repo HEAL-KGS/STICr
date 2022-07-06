@@ -15,6 +15,8 @@
 #' head(classified_df)
 classify_wetdry <- function(stic_data, classify_var = "spc", threshold = 200, method = "absolute") {
 
+  require(dplyr)
+
   # extract classify variable
  #if (!(classify_var %in% names(stic_data))) stop(paste0("classify_var input (", classify_var, ") is not present in stic_data"))
 

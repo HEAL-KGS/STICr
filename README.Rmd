@@ -78,11 +78,12 @@ The final function is called `classify_wetdry` and is demonstrated below. This f
 
 ```{r example4}
 # Creating classified data frame using "spc" as the classification variable, and an absolute threshold as the method for classification. The spc threshold chosen in this case is 200. 
-classified_df <- classify_wetdry(calibrated_df, classify_var = "spc", method = "absolute", threshold = 200)
+classified_df <- classify_wetdry(calibrated_df, classify_var = "spc", method = "absolute",
+                                 threshold = 200)
 head(classified_df)
 ```
 
-Below is a time series plot of the calibrated spc values colored by wet versus dry periods:
+Below is a time series plot of the calibrated spc values colored by wet versus dry periods.
 
 ```{r plot3}
 library(ggplot2)

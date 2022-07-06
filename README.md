@@ -126,7 +126,17 @@ except with a new binary column called “wetdry”.
 
 ``` r
 # Creating classified data frame using "spc" as the classification variable, and an absolute threshold as the method for classification. The spc threshold chosen in this case is 200. 
-classified_df <- classify_wetdry(calibrated_df, classify_var = "spc", method = "absolute", threshold = 200)
+classified_df <- classify_wetdry(calibrated_df, classify_var = "spc", method = "absolute",
+                                 threshold = 200)
+#> Loading required package: dplyr
+#> 
+#> Attaching package: 'dplyr'
+#> The following objects are masked from 'package:stats':
+#> 
+#>     filter, lag
+#> The following objects are masked from 'package:base':
+#> 
+#>     intersect, setdiff, setequal, union
 head(classified_df)
 #>              datetime conductivity_uncal temperature      spc wetdry
 #> 1 2021-07-16 17:00:00            88178.4      27.764 857.3845    wet
@@ -138,7 +148,7 @@ head(classified_df)
 ```
 
 Below is a time series plot of the calibrated spc values colored by wet
-versus dry periods:
+versus dry periods.
 
 ``` r
 library(ggplot2)

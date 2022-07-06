@@ -23,12 +23,12 @@ classify_wetdry <- function(stic_data, classify_var = "spc", threshold = 200, me
   if (method == "percent") {
 
     # classify and add to data frame
-    stic_data$wetdry <- if_else(classify_var >= (threshold * max(classify_var)), "wet", "dry" )
+    stic_data$wetdry <- ifelse(classify_var >= (threshold * max(classify_var)), "wet", "dry" )
 
   } else if (method == "absolute") {
 
     #classify and add to data frame
-    stic_data$wetdry <- if_else(classify_var >= threshold, "wet", "dry" )
+    stic_data$wetdry <- ifelse(classify_var >= threshold, "wet", "dry" )
 
   } else {
 

@@ -16,9 +16,6 @@
 
 tidy_hobo_data <- function(infile, outfile = FALSE) {
 
-  #load lubridate
-  require(lubridate)
-
   # read in file
   raw_data <- read.csv(infile,
                        skip = 1)

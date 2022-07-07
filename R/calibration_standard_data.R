@@ -1,6 +1,6 @@
 #' calibration_standard_data
 #'
-#' Calibration data for STIC sensor for conversion from uncalibrated conductivity to SpC
+#' Example calibration data for STIC sensor for conversion from uncalibrated conductivity to specific conductivity (`spc`).
 #'
 #' @docType data
 #'

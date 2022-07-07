@@ -1,6 +1,6 @@
 #' calibrated_stic_data
 #'
-#' Tidied Hobo data with calibrated SpC values included
+#' Tidied Hobo data with calibrated specific conductivity (`spc`) values included
 #'
 #' @docType data
 #'

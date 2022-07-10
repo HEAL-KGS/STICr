@@ -184,8 +184,16 @@ wet versus dry periods.
 
 ``` r
 classified_df$wetdry <- as.factor(classified_df$wetdry)
-plot(classified_df$datetime, classified_df$spc, col = classified_df$wetdry, lty = 1, type = "l",  
-     xlab = "datetime", ylab = "specific conductivity")
+
+plot(classified_df$datetime, classified_df$spc,
+     col = classified_df$wetdry,
+     pch = 16, 
+     lty = 2, 
+     xlab = "datetime", 
+     ylab = "spc", 
+    lines(classified_df$datetime, classified_df$spc, pch=18, col="black", type="b", lty=2, lwd=2.0))
+legend("topright", c("dry", "wet"), 
+       fill = c("black","red"), cex = 0.75)
 ```
 
 <img src="man/figures/README-plot3-1.png" width="100%" />

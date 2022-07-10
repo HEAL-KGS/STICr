@@ -191,7 +191,8 @@ plot(classified_df$datetime, classified_df$spc,
      lty = 2, 
      xlab = "datetime", 
      ylab = "spc", 
-    lines(classified_df$datetime, classified_df$spc, pch=18, col="black", type="b", lty=2, lwd=2.0))
+    lines(classified_df$datetime, classified_df$spc,
+          pch = 18, col = "black", type = "b", lty = 2, lwd = 2))
 legend("topright", c("dry", "wet"), 
        fill = c("black","red"), cex = 0.75)
 ```

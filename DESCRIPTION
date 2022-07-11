@@ -10,5 +10,8 @@ Description: This package includes a collection of functions for tidying and pro
 License: AGPL-3.0 
 Encoding: UTF-8
 LazyData: true
+Imports:
+    dplyr,
+    lubridate
 RoxygenNote: 7.2.0
 Version: 0.1

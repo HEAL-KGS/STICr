@@ -20,6 +20,12 @@ tidy_hobo_data <- function(infile, outfile = FALSE) {
   raw_data <- read.csv(infile,
                        skip = 1)
 
+  if ("Date" %in% names(raw_data)) {
+    raw_data$datetime <- mdy_hms(paste0(raw_data$Date, " ", raw_data$Time..GMT.05.00))
+  } else {
+    raw_data$datetime <- mdy_hms(raw_data$Date.Time..GMT.05.00)
+  }
+
   # tidy columns
   tidy_data <-
     raw_data |>
@@ -27,11 +33,8 @@ tidy_hobo_data <- function(infile, outfile = FALSE) {
                        .fn = function(x){"temperature"}) |>
     dplyr::rename_with(.cols = contains("Lux"),
                        .fn = function(x){"conductivity_uncal"}) |>
-    dplyr::rename_with(.cols = contains("Date"),
-                       .fn = function(x){"datetime"}) |>
     dplyr::select(datetime, conductivity_uncal, temperature) |>
-    dplyr::mutate(datetime = lubridate::mdy_hms(datetime),
-                  temperature = as.numeric(temperature),
+    dplyr::mutate(temperature = as.numeric(temperature),
                   conductivity_uncal = as.numeric(conductivity_uncal))
 
   # save data if needed

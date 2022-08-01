@@ -4,15 +4,15 @@
 #'
 #' @param stic_data A data frame with STIC data, such as that produced by `apply_calibration` or `tidy_hobo_data`
 #' @param classify_var Name of the column in data frame you want to use for classification.
-#                   Defaults to `spc` which would be the output from `apply_calibration` function.
+#                   Defaults to `SpC` which would be the output from `apply_calibration` function.
 #' @param method User chooses which classification method used to generate the binary data. "absolute" uses an absolute numerical threshold for classifying wet vs dry. "percent" uses a threshold based on a given percentage of the maximum value of the classification variable in the data frame.
 #' @param threshold This is the user-defined threshold for determining wet versus dry based on the designated classification variable. If using the "absolute" method, the threshold will be a value in the same units as the designated classification variable. If using the "percent" method, the value will be a decimal percentage of the max value of the classification variable in the data frame. Values above this proportion of the maximum will be designated as wet.
 #'
 #' @return The same data frame as input, but with a new column called `wetdry`.
 #' @export
-#' @examples classified_df <- classify_wetdry(calibrated_stic_data, classify_var = "spc", method = "absolute", threshold = 200)
+#' @examples classified_df <- classify_wetdry(calibrated_stic_data, classify_var = "SpC", method = "absolute", threshold = 200)
 #' head(classified_df)
-classify_wetdry <- function(stic_data, classify_var = "spc", threshold = 200, method = "absolute") {
+classify_wetdry <- function(stic_data, classify_var = "SpC", threshold = 200, method = "absolute") {
 
  class_var <- stic_data[ , classify_var]
 

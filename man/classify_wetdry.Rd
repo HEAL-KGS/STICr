@@ -6,7 +6,7 @@
 \usage{
 classify_wetdry(
   stic_data,
-  classify_var = "spc",
+  classify_var = "SpC",
   threshold = 200,
   method = "absolute"
 )
@@ -27,6 +27,6 @@ The same data frame as input, but with a new column called `wetdry`.
 This is a function to classify STIC data into a binary "wet" and "dry" column. Data can be classified according to any classification variable defined by the user. User can choose one of two methods for classification: either an absolute numerical threshold or as a chosen percentage of the maximum value of the classification variable.
 }
 \examples{
-classified_df <- classify_wetdry(calibrated_stic_data, classify_var = "spc", method = "absolute", threshold = 200)
+classified_df <- classify_wetdry(calibrated_stic_data, classify_var = "SpC", method = "absolute", threshold = 200)
 head(classified_df)
 }

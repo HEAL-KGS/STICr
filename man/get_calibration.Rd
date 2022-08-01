@@ -7,7 +7,7 @@
 get_calibration(calibration_data, method = "linear")
 }
 \arguments{
-\item{calibration_data}{STIC calibration data frame with columns "standard" and "conductivity_uncal"}
+\item{calibration_data}{STIC calibration data frame with columns "standard" and "condUncal"}
 
 \item{method}{method for creating interpolation: "linear" (default) or "exponential"}
 }

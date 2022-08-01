@@ -6,7 +6,7 @@
 #' @param infile filename (including path or URL if needed) for a raw CSV file exported from HOBOware.
 #' @param outfile filename (including path if needed) to save the tidied data frame. Defaults to FALSE, in which case tidied data will not be saved.
 #'
-#' @return a tidied data frame with the following column names: datetime, conductivity_uncal, temperature
+#' @return a tidied data frame with the following column names: datetime, condUncal, tempC
 #' @export
 #'
 #' @examples
@@ -30,12 +30,12 @@ tidy_hobo_data <- function(infile, outfile = FALSE) {
   tidy_data <-
     raw_data |>
     dplyr::rename_with(.cols = contains("Temp"),
-                       .fn = function(x){"temperature"}) |>
+                       .fn = function(x){"tempC"}) |>
     dplyr::rename_with(.cols = contains("Lux"),
-                       .fn = function(x){"conductivity_uncal"}) |>
-    dplyr::select(datetime, conductivity_uncal, temperature) |>
-    dplyr::mutate(temperature = as.numeric(temperature),
-                  conductivity_uncal = as.numeric(conductivity_uncal))
+                       .fn = function(x){"condUncal"}) |>
+    dplyr::select(datetime, condUncal, tempC) |>
+    dplyr::mutate(tempC = as.numeric(tempC),
+                  condUncal = as.numeric(condUncal))
 
   # save data if needed
   if (outfile != FALSE) {

@@ -12,7 +12,7 @@ tidy_hobo_data(infile, outfile = FALSE)
 \item{outfile}{filename (including path if needed) to save the tidied data frame. Defaults to FALSE, in which case tidied data will not be saved.}
 }
 \value{
-a tidied data frame with the following column names: datetime, conductivity_uncal, temperature
+a tidied data frame with the following column names: datetime, condUncal, tempC
 }
 \description{
 This function loads raw HOBO STIC CSV files and cleans up columns and headers

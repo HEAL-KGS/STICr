@@ -14,10 +14,6 @@
 #'
 apply_calibration <- function(stic_data, calibration) {
 
-  if (class(calibration) == "character") {
-    stic_data$SpC <- NA
-  }
-
   # apply fitted model to STIC data
   just_spc <- predict(object = calibration, newdata = stic_data)
 

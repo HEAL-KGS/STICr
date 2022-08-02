@@ -35,6 +35,7 @@ tidy_hobo_data <- function(infile, outfile = FALSE) {
                        .fn = function(x){"condUncal"}) |>
     dplyr::select(datetime, condUncal, tempC) |>
     dplyr::mutate(tempC = as.numeric(tempC),
+                  condUncal = gsub(",", "", condUncal),
                   condUncal = as.numeric(condUncal))
 
   # save data if needed

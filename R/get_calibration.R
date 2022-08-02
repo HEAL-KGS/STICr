@@ -14,6 +14,10 @@
 #'
 get_calibration <- function(calibration_data, method = "linear") {
 
+  if (is.na(calibration_data$standard) | is.na(calibration_data$standard)) {
+    calibration <- print("No data available to make calibration model")
+  }
+
   if (method == "exponential") {
 
     log_standard <- log(standard)

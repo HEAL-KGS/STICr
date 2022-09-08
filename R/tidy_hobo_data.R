@@ -31,7 +31,7 @@ tidy_hobo_data <- function(infile, outfile = FALSE) {
     raw_data |>
     dplyr::rename_with(.cols = contains("Temp"),
                        .fn = function(x){"tempC"}) |>
-    dplyr::rename_with(.cols = contains("Lux"),
+    dplyr::rename_with(.cols = contains("Intensity"),
                        .fn = function(x){"condUncal"}) |>
     dplyr::select(datetime, condUncal, tempC) |>
     dplyr::mutate(tempC = as.numeric(tempC),

@@ -10,7 +10,7 @@
 #' @return a tidied data frame with the same columns as the input, but trimmed to the user-defined time
 #' @export
 #'
-#' @examples trimmed_data <- trim_hobo_data(stic_data, time_start = "2021-07-16 18:00:00", time_end = "2021-07-27 01:00:00")
+#' @examples trimmed_data <- trim_hobo_data(tidy_stic_data, time_start = "2021-07-16 18:00:00", time_end = "2021-07-27 01:00:00")
 #' head(trimmed_data)
 
 trim_hobo_data <- function(stic_data, time_start = "2021-07-16 18:00:00", time_end = "2021-07-27 01:00:00") {

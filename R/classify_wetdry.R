@@ -26,7 +26,13 @@ classify_wetdry <- function(stic_data, classify_var = "SpC", threshold = 200, me
     #classify and add to data frame
     stic_data$wetdry <- dplyr::if_else(class_var >= threshold, "wet", "dry" )
 
-  } else {
+  } else if (method == "y-intercept") {
+
+    y_int <- threshold$coefficients[2]
+
+    stic_data$wetdry <- dplyr::if_all(class_var >= y_int, "wet", "dry")
+
+} else {
 
     stop("Unknown method. Please use absolute or percent.")
 

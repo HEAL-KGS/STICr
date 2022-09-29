@@ -20,8 +20,10 @@ tidy_hobo_data <- function(infile, outfile = FALSE) {
   raw_data <- read.csv(infile,
                        skip = 1)
 
+
+
   if ("Date" %in% names(raw_data)) {
-    raw_data$datetime <- lubridate::mdy_hms(paste0(raw_data$Date, " ", raw_data$Time..GMT.06.00))
+    raw_data$datetime <- lubridate::mdy_hms(paste0(raw_data$Date, " ", raw_data$Time..GMT.05.00))
   } else {
     raw_data$datetime <- lubridate::mdy_hms(raw_data$Date.Time..GMT.06.00)
   }

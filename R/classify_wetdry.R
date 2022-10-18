@@ -10,8 +10,10 @@
 #'
 #' @return The same data frame as input, but with a new column called `wetdry`.
 #' @export
+#'
 #' @examples classified_df <- classify_wetdry(calibrated_stic_data, classify_var = "SpC", method = "absolute", threshold = 200)
 #' head(classified_df)
+
 classify_wetdry <- function(stic_data, classify_var = "SpC", threshold = 200, method = "absolute") {
 
  class_var <- stic_data[ , classify_var]
@@ -30,7 +32,7 @@ classify_wetdry <- function(stic_data, classify_var = "SpC", threshold = 200, me
 
     y_int <- threshold$coefficients[2]
 
-    stic_data$wetdry <- dplyr::if_all(class_var >= y_int, "wet", "dry")
+    stic_data$wetdry <- dplyr::if_else(class_var >= y_int, "wet", "dry")
 
 } else {
 

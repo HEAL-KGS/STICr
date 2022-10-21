@@ -20,7 +20,7 @@ validate_stic_data <- function(stic_data, include_SpC = TRUE, include_classifica
     expected_value_SpC <- stic_data$field_SpC
     predicted_value_SpC <- stic_data$SpC
 
-    SpC_confusion_matrix <- confusionMatrix(data = predicted_value_SpC,
+    SpC_confusion_matrix <- caret::confusionMatrix(data = predicted_value_SpC,
                                             reference = expected_value_SpC)
 
   }
@@ -30,7 +30,7 @@ validate_stic_data <- function(stic_data, include_SpC = TRUE, include_classifica
     expected_value_classification <- stic_data$field_classification
     predicted_value_classification <- stic_data$wetdry
 
-    classification_confusion_matrix <- confusionMatrix(data = predicted_value_classification,
+    classification_confusion_matrix <- caret::confusionMatrix(data = predicted_value_classification,
                                             reference = expected_value_classification)
 
   }

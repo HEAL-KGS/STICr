@@ -9,8 +9,7 @@
 #' @return one or two confusion matrices
 #' @export
 #'
-#' @examples trimmed_data <- trim_hobo_data(tidy_stic_data, time_start = "2021-07-16 18:00:00", time_end = "2021-07-27 01:00:00")
-#' head(trimmed_data)
+#' @examples data_validation_confusion_matrix <- validate_stic_data <- function(stic_data = classified_stic_with_field_obs, include_SpC = TRUE, include_classification = TRUE
 
 validate_stic_data <- function(stic_data, include_SpC = TRUE, include_classification = TRUE) {
 

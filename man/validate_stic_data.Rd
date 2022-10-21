@@ -24,6 +24,5 @@ one or two confusion matrices
 This function creates two confusion matrices from a classified STIC data frame with the variable names of that produced by `classify_wetdry`, with the addition of two additional columns called `field_SpC` and `field_classification`
 }
 \examples{
-trimmed_data <- trim_hobo_data(tidy_stic_data, time_start = "2021-07-16 18:00:00", time_end = "2021-07-27 01:00:00")
-head(trimmed_data)
+data_validation_confusion_matrix <- validate_stic_data <- function(stic_data = classified_stic_with_field_obs, include_SpC = TRUE, include_classification = TRUE
 }

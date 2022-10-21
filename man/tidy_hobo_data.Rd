@@ -4,12 +4,21 @@
 \alias{tidy_hobo_data}
 \title{tidy_hobo_data}
 \usage{
-tidy_hobo_data(infile, outfile = FALSE)
+tidy_hobo_data(
+  infile,
+  outfile = FALSE,
+  convert_utc = TRUE,
+  timezone = "US/Central"
+)
 }
 \arguments{
 \item{infile}{filename (including path or URL if needed) for a raw CSV file exported from HOBOware.}
 
 \item{outfile}{filename (including path if needed) to save the tidied data frame. Defaults to FALSE, in which case tidied data will not be saved.}
+
+\item{convert_utc}{a logical urgument indicating whether the user would like to convert from the time zone associated with their CSV to UTC}
+
+\item{timezone}{a character argument indicating the time zone associated with the input HOBO csv}
 }
 \value{
 a tidied data frame with the following column names: datetime, condUncal, tempC
@@ -18,7 +27,7 @@ a tidied data frame with the following column names: datetime, condUncal, tempC
 This function loads raw HOBO STIC CSV files and cleans up columns and headers
 }
 \examples{
-clean_data <- tidy_hobo_data(infile = "https://raw.githubusercontent.com/HEAL-KGS/STICr/main/data/raw_hobo_data.csv", outfile = FALSE)
+clean_data <- tidy_hobo_data(infile = "https://raw.githubusercontent.com/HEAL-KGS/STICr/main/data/raw_hobo_data.csv", outfile = FALSE, convert_utc = TRUE, timezone = "US/Central")
 head(clean_data)
 
 }

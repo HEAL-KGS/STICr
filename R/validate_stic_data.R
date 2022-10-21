@@ -9,7 +9,7 @@
 #' @return one or two confusion matrices
 #' @export
 #'
-#' @examples data_validation_confusion_matrix <- validate_stic_data <- function(stic_data = classified_stic_with_field_obs, include_SpC = TRUE, include_classification = TRUE
+#' @examples data_validation_confusion_matrix <- validate_stic_data <- function(stic_data = classified_stic_with_field_obs, include_SpC = TRUE, include_classification = TRUE)
 
 validate_stic_data <- function(stic_data, include_SpC = TRUE, include_classification = TRUE) {
 

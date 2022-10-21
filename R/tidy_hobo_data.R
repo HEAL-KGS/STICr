@@ -45,7 +45,7 @@ tidy_hobo_data <- function(infile, outfile = FALSE, convert_utc = TRUE, timezone
   if (convert_utc == TRUE) {
 
     tidy_data <- tidy_data |>
-      mutate(datetime = lubridate::mdy_hms(dateime, tz = timezone)) |>
+      mutate(datetime = lubridate::mdy_hms(datetime, tz = timezone)) |>
       mutate(datetime = lubridate::with_tz(datetime, tzone = "UTC"))
 
     }

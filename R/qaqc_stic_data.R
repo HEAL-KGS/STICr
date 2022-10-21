@@ -15,7 +15,7 @@
 #' @return The same data frame as input, but with new QAQC columns or a single, concatenated QAQC column
 #' @export
 #'
-#' @examples qaqc_df <- qaqc_stic_data(classified_stic_data, spc_neg_correction = TRUE, inspect_classification = TRUE, concatenate_flags = TRUE)
+#' @examples qaqc_df <- qaqc_stic_data(classified_df, spc_neg_correction = TRUE, inspect_classification = TRUE, concatenate_flags = TRUE)
 
 qaqc_stic_data <- function(stic_data, spc_neg_correction = TRUE, inspect_classification = TRUE,
                            concatenate_flags = TRUE) {
@@ -40,8 +40,8 @@ qaqc_stic_data <- function(stic_data, spc_neg_correction = TRUE, inspect_classif
     stic_data <- group_by(stic_data, data.table::rleid(wetdry)) %>%
       mutate(n = n()) %>%
       ungroup() %>%
-      mutate(anomaly_tf = classification != lag(classification, 1, default = "")
-             & classification != lead(classification, 1, default = "")
+      mutate(anomaly_tf = wetdry != lag(wetdry, 1, default = "")
+             & wetdry != lead(wetdry, 1, default = "")
              & lag(n, 1, default = 0) > 1000 & lead(n, 1, default = 0) > 1000)
 
     stic_data$anomaly <- dplyr::if_else(stic_data$anomaly_tf == TRUE, "B", "" )

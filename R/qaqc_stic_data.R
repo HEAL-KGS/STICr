@@ -37,17 +37,17 @@ qaqc_stic_data <- function(stic_data, spc_neg_correction = TRUE, inspect_classif
   if (inspect_classification == TRUE) {
 
     # This is working
-    stic_data <- group_by(stic_data, data.table::rleid(wetdry)) %>%
-      mutate(n = n()) %>%
-      ungroup() %>%
-      mutate(anomaly_tf = wetdry != lag(wetdry, 1, default = "")
+    stic_data <- dplyr::group_by(stic_data, data.table::rleid(wetdry)) %>%
+      dplyr::mutate(n = n()) %>%
+      dplyr::ungroup() %>%
+      dplyr::mutate(anomaly_tf = wetdry != lag(wetdry, 1, default = "")
              & wetdry != lead(wetdry, 1, default = "")
              & lag(n, 1, default = 0) > 1000 & lead(n, 1, default = 0) > 1000)
 
     stic_data$anomaly <- dplyr::if_else(stic_data$anomaly_tf == TRUE, "B", "" )
 
     stic_data <- stic_data %>%
-      select(-c(data.table::rleid(wetdry), anomaly_tf, n))
+      dplyr::select(-c(data.table::rleid(wetdry), anomaly_tf, n))
 
   }
 

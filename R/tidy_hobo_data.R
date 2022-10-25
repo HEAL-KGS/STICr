@@ -46,7 +46,7 @@ tidy_hobo_data <- function(infile, outfile = FALSE, convert_utc = TRUE) {
   if (convert_utc == TRUE) {
 
     tidy_data <- tidy_data |>
-      mutate(datetime = datetime + (time_offset * 60 * 60))
+      mutate(datetime = datetime + (utc_time_offset * 60 * 60))
 
   }
 

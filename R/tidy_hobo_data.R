@@ -37,7 +37,7 @@ tidy_hobo_data <- function(infile, outfile = FALSE, convert_utc = TRUE) {
     dplyr::rename_with(.cols = contains("Date"),
                        .fn = function(x){"datetime"}) |>
     dplyr::select(datetime, condUncal, tempC) |>
-    dplyr::mutate(datetime = lubridate::mdy_hms(datetime))
+    dplyr::mutate(datetime = lubridate::mdy_hms(datetime)) |>
     dplyr::mutate(tempC = as.numeric(tempC),
                   condUncal = gsub(",", "", condUncal),
                   condUncal = as.numeric(condUncal))

@@ -5,37 +5,37 @@
 #'
 #' @param infile filename (including path or URL if needed) for a raw CSV file exported from HOBOware.
 #' @param outfile filename (including path if needed) to save the tidied data frame. Defaults to FALSE, in which case tidied data will not be saved.
-#' @param convert_utc a logical urgument indicating whether the user would like to convert from the time zone associated with their CSV to UTC
-#' @param timezone a character argument indicating the time zone associated with the input HOBO csv
+#' @param convert_utc a logical argument indicating whether the user would like to convert from the time zone associated with their CSV to UTC
 #'
 #' @return a tidied data frame with the following column names: datetime, condUncal, tempC
 #' @export
 #'
 #' @examples
-#' clean_data <- tidy_hobo_data(infile = "https://raw.githubusercontent.com/HEAL-KGS/STICr/main/data/raw_hobo_data.csv", outfile = FALSE, convert_utc = TRUE, timezone = "US/Central")
+#' clean_data <- tidy_hobo_data(infile = "https://raw.githubusercontent.com/HEAL-KGS/STICr/main/data/raw_hobo_data.csv", outfile = FALSE, convert_utc = TRUE)
 #' head(clean_data)
 #'
 
-tidy_hobo_data <- function(infile, outfile = FALSE, convert_utc = TRUE, timezone = "US/Central") {
+tidy_hobo_data <- function(infile, outfile = FALSE, convert_utc = TRUE) {
 
   # read in file
-  raw_data <- read.csv(infile, skip = 1) |>
-    dplyr::rename_with(.cols = contains("Date"),
-                       .fn = function(x){"datetime"})
+  raw_data <- read.csv(infile, skip = 1)
 
- # if ("Date" %in% names(raw_data)) {
- #   raw_data$datetime <- lubridate::mdy_hms(paste0(raw_data$Date, " ", raw_data$Time..GMT.05.00))
-#  } else {
-   # raw_data$datetime <- lubridate::mdy_hms(raw_data$Date.Time..GMT.05.00)
-#  }
+  # get numeric version of number of hours to add from datetime column name
+  utc_time_offset <- raw_data |>
+    select(contains("Date")) |>
+    colnames() |>
+    str_sub(start = -5, end = -4) |>
+    as.numeric()
 
-  # tidy columns
+  # tidy columns and names
   tidy_data <-
     raw_data |>
     dplyr::rename_with(.cols = contains("Temp"),
                        .fn = function(x){"tempC"}) |>
     dplyr::rename_with(.cols = contains("Intensity"),
                        .fn = function(x){"condUncal"}) |>
+    dplyr::rename_with(.cols = contains("Date"),
+                       .fn = function(x){"datetime"}) |>
     dplyr::select(datetime, condUncal, tempC) |>
     dplyr::mutate(tempC = as.numeric(tempC),
                   condUncal = gsub(",", "", condUncal),
@@ -45,10 +45,9 @@ tidy_hobo_data <- function(infile, outfile = FALSE, convert_utc = TRUE, timezone
   if (convert_utc == TRUE) {
 
     tidy_data <- tidy_data |>
-      mutate(datetime = lubridate::mdy_hms(datetime, tz = timezone)) |>
-      mutate(datetime = lubridate::with_tz(datetime, tzone = "UTC"))
+      mutate(datetime = datetime + (time_offset * 60 * 60))
 
-    }
+  }
 
   # save data if needed
   if (outfile != FALSE) {

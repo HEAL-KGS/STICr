@@ -46,8 +46,8 @@ qaqc_stic_data <- function(stic_data, spc_neg_correction = TRUE, inspect_classif
 
     stic_data$anomaly <- dplyr::if_else(stic_data$anomaly_tf == TRUE, "B", "" )
 
-   # stic_data <- stic_data %>%
-     # dplyr::select(-c(data.table::rleid(wetdry), anomaly_tf, n))
+   stic_data <- stic_data %>%
+    dplyr::select(-c(data.table::rleid(wetdry), anomaly_tf, n))
 
   }
 

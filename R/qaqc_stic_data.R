@@ -6,10 +6,10 @@
 #'
 #' @param stic_data A data frame with classified STIC data, such as that produced by `classify_wetdry`
 #' @param spc_neg_correction a logical argument indicating whether the user would like to correct negative SPC values resulting from the calibration process to 0.
-#' The character code associated with this correction is "A".
+#' The character code associated with this correction is "N".
 #' @param inspect_classification a logical argument indicating whether the user would like to identify instances in which either a wet or dry reading is surrounded on both sides by 1000 or more observations of its opposite.
 #' This operation is meant to identify potentially suspect binary wet/dry data points for further examination.
-#' The character code associated with this operation is "B".
+#' The character code associated with this operation is "A".
 #' @param anomaly_size a numeric argument specifying the maximum size (i.e., number of observations) of a clustered group of points that can be flagged as an anomaly
 #' @param window_size a numeric argument specifying the minimum size (i.e., number of observations) that the anomaly must be surrounded by in order to be flagged
 #' @param concatenate_flags a logical argument indicating whether the user would like to combine the character codes generated into a single QAQC flag column.
@@ -32,7 +32,7 @@ qaqc_stic_data <- function(stic_data, spc_neg_correction = TRUE, inspect_classif
         false = SpC)) %>%
       mutate(negative_SpC = if_else(
         condition = SpC == 0,
-        true = "A",
+        true = "N",
         false = "" ))
   }
 
@@ -46,7 +46,7 @@ qaqc_stic_data <- function(stic_data, spc_neg_correction = TRUE, inspect_classif
              & wetdry != lead(wetdry, 1, default = "")
              & lag(n, 1, default = 0) > 1000 & lead(n, 1, default = 0) > 1000)
 
-    stic_data$anomaly <- dplyr::if_else(stic_data$anomaly_tf == TRUE, "B", "" )
+    stic_data$anomaly <- dplyr::if_else(stic_data$anomaly_tf == TRUE, "A", "" )
 
    stic_data <- stic_data %>%
     dplyr::select(-c(data.table::rleid(wetdry), anomaly_tf, n))

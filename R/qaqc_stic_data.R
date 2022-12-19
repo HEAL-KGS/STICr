@@ -55,13 +55,13 @@ qaqc_stic_data <- function(stic_data, spc_neg_correction = TRUE, inspect_classif
 
  if (concatenate_flags == TRUE) {
 
-   # concatenate the QAQC columns with col codes: "A" for negative SpC;
-   # "B" for anomalous classification
+   # concatenate the QAQC columns with col codes: "N" for negative SpC;
+   # "A" for anomalous classification; "O" for outside standard range
    stic_data$QAQC <-
-     stringr::str_c(stic_data$negative_SpC, '', stic_data$anomaly)
+     stringr::str_c(stic_data$negative_SpC, '', stic_data$anomaly, '', stic_data$outside_range)
 
    stic_data <- stic_data %>%
-     select(-c(negative_SpC, anomaly))
+     select(-c(negative_SpC, anomaly, outside_range))
 
  }
 

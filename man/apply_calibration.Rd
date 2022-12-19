@@ -4,12 +4,14 @@
 \alias{apply_calibration}
 \title{apply_calibration}
 \usage{
-apply_calibration(stic_data, calibration)
+apply_calibration(stic_data, calibration, outside_range_flag = TRUE)
 }
 \arguments{
 \item{stic_data}{A data frame with a column named `condUncal`, for example as produced by the function `tidy_hobo_data`.}
 
 \item{calibration}{a model object relating `condUncal` to a standard of some sort, for example as produced by the function `get_calibration`.}
+
+\item{outside_range_flag}{a logical argument indicating whether the user would like to include an additional column flagging instances where the calibrated SpC value is outside the range of standards used to calibrate it}
 }
 \value{
 The same data frame as input, except with a new column called `SpC`. This will be in the same units as the data used to develop the model calibration.

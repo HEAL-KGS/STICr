@@ -4,6 +4,7 @@
 #'
 #' @param stic_data A data frame with a column named `condUncal`, for example as produced by the function `tidy_hobo_data`.
 #' @param calibration a model object relating `condUncal` to a standard of some sort, for example as produced by the function `get_calibration`.
+#' @param outside_range_flag a logical argument indicating whether the user would like to include an additional column flagging instances where the calibrated SpC value is outside the range of standards used to calibrate it
 #'
 #' @return The same data frame as input, except with a new column called `SpC`. This will be in the same units as the data used to develop the model calibration.
 #' @export
@@ -12,13 +13,27 @@
 #' calibrated_df <- apply_calibration(tidy_stic_data, lm_calibration)
 #' head(calibrated_df)
 #'
-apply_calibration <- function(stic_data, calibration) {
+apply_calibration <- function(stic_data, calibration, outside_range_flag = TRUE) {
 
   # apply fitted model to STIC data
   just_spc <- predict(object = calibration, newdata = stic_data)
 
   # add new column to data frame
   stic_data$SpC <- just_spc
+
+  if (outside_range_flag == TRUE) {
+
+    # Extract max and min of calibration standards from model object
+    model_data <- lm_calibration$model
+    standards <- model_data$standard
+    min_standard <- min(standards, na.rm = TRUE)
+    max_standard <- max(standards, na.rm = TRUE)
+
+    # Create outside range column with mutate
+    stic_data$outside_range <- if_else(stic_data$SpC >= max_standard | stic_data$SpC <= min_standard,
+                                       "O", "")
+
+  }
 
   return(stic_data)
 }

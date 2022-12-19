@@ -24,7 +24,7 @@ qaqc_stic_data <- function(stic_data, spc_neg_correction = TRUE, inspect_classif
 
   if (spc_neg_correction == TRUE) {
 
-    # Deal with negative spc values (maybe move to previous script)
+    # Deal with negative spc values
     stic_data <- stic_data %>%
       mutate(SpC = if_else(
         condition = SpC <= -1,

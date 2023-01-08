@@ -36,8 +36,16 @@ validate_stic_data <- function(stic_data, field_observations) {
 
   confusion_matrix <- data.frame(predicted_positive, predicted_negative)
 
-  # making row names: "actual_positive" and "actual_negative"
+  # Making row names: "actual_positive" and "actual_negative"
   row.names(confusion_matrix) <- c("actual_positive", "actual_negative")
+
+  # Producing the plot if user has supplied "SpC" column
+  if ("SpC_field" %in% colnames(stic_and_field_obs)) {
+
+    plot(stic_and_field_obs$SpC, stic_and_field_obs$SpC_field,
+         xlab = "STIC-measured SpC", ylab = "Field_measured_SpC")
+
+  }
 
 
   return(confusion_matrix)

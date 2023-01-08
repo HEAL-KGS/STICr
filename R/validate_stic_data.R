@@ -18,7 +18,7 @@ validate_stic_data <- function(stic_data, field_observations) {
     rename(SpC_field = SpC)
 
 
-  stic_and_field_obs <- left_join(stic_data, field_obsservations, by = "datetime")
+  stic_and_field_obs <- left_join(stic_data, field_observations, by = "datetime")
 
   # Replacing na values in wetdry_field column with blank string
   stic_and_field_obs$wetdry_field[is.na(stic_and_field_obs$wetdry_field)] <- ""

@@ -8,7 +8,7 @@
 #' @return A confusion matrix (if just field wet/dry observations are included) and an SpC scatter plot if field measurements of SpC are included.
 #' @export
 #'
-#' @examples data_validation_confusion_matrix <- validate_stic_data(stic_data = classified_stic_with_field_obs, include_SpC = TRUE, include_classification = TRUE)
+#' @examples data_validation_confusion_matrix <- validate_stic_data(stic_data = classified_df, field_observations = field_obs)
 
 validate_stic_data <- function(stic_data, field_observations) {
 

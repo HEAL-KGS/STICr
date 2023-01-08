@@ -18,5 +18,5 @@ A confusion matrix (if just field wet/dry observations are included) and an SpC 
 This function takes a data frame with field observations of wet/dry status and SpC and generates both a confusion matrix for the wet/dry observations and a scatterplot comparing estimated SpC from the STICs to field-measured values.
 }
 \examples{
-data_validation_confusion_matrix <- validate_stic_data(stic_data = classified_stic_with_field_obs, include_SpC = TRUE, include_classification = TRUE)
+data_validation_confusion_matrix <- validate_stic_data(stic_data = classified_df, field_observations = field_obs)
 }

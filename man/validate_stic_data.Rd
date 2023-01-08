@@ -4,24 +4,18 @@
 \alias{validate_stic_data}
 \title{validate_stic_data.R}
 \usage{
-validate_stic_data(
-  stic_data,
-  include_SpC = TRUE,
-  include_classification = TRUE
-)
+validate_stic_data(stic_data, field_observations)
 }
 \arguments{
-\item{stic_data}{classified STIC data frame with the variable names of that produced by `classify_wetdry`, with the addition of two additional columns called `field_SpC` and `field_classification`}
+\item{stic_data}{classified STIC data frame with the variable names of that produced by `classify_wetdry`}
 
-\item{include_SpC}{logical argument where the user specifies if they want a matrix for SpC measurements}
-
-\item{include_classification}{logical argument where the user specifies if they want a matrix for SpC measurements}
+\item{field_observations}{The input data frame of field observations must include a datetime column (in Posixct format), as well as a column labeled wetdry consisting of the character strings “wet” or “dry” (as in the processed STIC data itself). Additionally, if field data on SpC was collected (e.g., with a sonde), this should be included as a third column called SpC, and units should be in µS/cm.}
 }
 \value{
-one or two confusion matrices
+A confusion matrix (if just field wet/dry observations are included) and an SpC scatter plot if field measurements of SpC are included.
 }
 \description{
-This function creates two confusion matrices from a classified STIC data frame with the variable names of that produced by `classify_wetdry`, with the addition of two additional columns called `field_SpC` and `field_classification`
+This function takes a data frame with field observations of wet/dry status and SpC and generates both a confusion matrix for the wet/dry observations and a scatterplot comparing estimated SpC from the STICs to field-measured values.
 }
 \examples{
 data_validation_confusion_matrix <- validate_stic_data(stic_data = classified_stic_with_field_obs, include_SpC = TRUE, include_classification = TRUE)

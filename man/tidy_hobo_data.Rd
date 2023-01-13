@@ -9,12 +9,12 @@ tidy_hobo_data(infile, outfile = FALSE, convert_utc = TRUE)
 \arguments{
 \item{infile}{filename (including path or URL if needed) for a raw CSV file exported from HOBOware.}
 
-\item{outfile}{filename (including path if needed) to save the tidied data frame. Defaults to FALSE, in which case tidied data will not be saved.}
+\item{outfile}{filename (including path if needed) to save the tidied data frame. Defaults to \code{FALSE}, in which case tidied data will not be saved.}
 
 \item{convert_utc}{a logical argument indicating whether the user would like to convert from the time zone associated with their CSV to UTC}
 }
 \value{
-a tidied data frame with the following column names: datetime, condUncal, tempC
+a tidied data frame with the following column names: \code{datetime}, \code{condUncal}, \code{tempC}.
 }
 \description{
 This function loads raw HOBO STIC CSV files and cleans up columns and headers

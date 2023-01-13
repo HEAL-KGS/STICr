@@ -4,7 +4,9 @@ Title: Functions for Working with STIC Intermittency Sensors
 Authors@R: as.person(c(
     "Christopher T. Wheeler <christopher.wheeler@ku.edu> [aut, cre]",
     "Sam Zipper <samzipper@ku.edu> [aut]",
-    "Stephen Cook <stephencook@ou.edu> [ctb]"
+    "Stephen Cook [ctb]",
+    "Delaney Peterson [ctb]",
+    "Sarah Godsey [ctb]"
   ))
 Description: This package includes a collection of functions for tidying and processing raw data from Stream Temperature, Intermittency, and Conductivity (STIC) loggers. These include functions for tidying the raw data from the loggers (tidy_hobo_data), creating a calibration model object from calibration standard data (get_calibration), apply this object to generate a column for specific conductivity (apply_calibration), and create a binary wet/dry column (classify_wetdry).
 License: AGPL-3.0 
@@ -14,4 +16,8 @@ RoxygenNote: 7.2.2
 Version: 0.1
 Imports: 
     dplyr,
-    lubridate
+    lubridate,
+    data.table,
+    ggplot2,
+    stringr,
+    tidyr

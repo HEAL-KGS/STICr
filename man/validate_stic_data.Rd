@@ -7,9 +7,9 @@
 validate_stic_data(stic_data, field_observations)
 }
 \arguments{
-\item{stic_data}{classified STIC data frame with the variable names of that produced by `classify_wetdry`}
+\item{stic_data}{classified STIC data frame with the variable names of that produced by \link{classify_wetdry}}
 
-\item{field_observations}{The input data frame of field observations must include a datetime column (in Posixct format), as well as a column labeled wetdry consisting of the character strings “wet” or “dry” (as in the processed STIC data itself). Additionally, if field data on SpC was collected (e.g., with a sonde), this should be included as a third column called SpC, and units should be in µS/cm.}
+\item{field_observations}{The input data frame of field observations must include a \code{datetime} column (in Posixct format), as well as a column labeled \code{wetdry} consisting of the character strings “wet” or “dry” (as in the processed STIC data itself). Additionally, if field data on SpC was collected (e.g., with a sonde), this should be included as a third column called \code{SpC}, and units should be in µS/cm.}
 }
 \value{
 A confusion matrix (if just field wet/dry observations are included) and an SpC scatter plot if field measurements of SpC are included.

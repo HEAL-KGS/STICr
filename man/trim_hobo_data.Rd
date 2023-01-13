@@ -11,7 +11,7 @@ trim_hobo_data(
 )
 }
 \arguments{
-\item{stic_data}{A data frame with columns named `condUncal` and  `datetime`, for example as produced by the function `tidy_hobo_data`.}
+\item{stic_data}{A data frame with columns named \code{condUncal} and  \code{datetime}, for example as produced by the function \code{tidy_hobo_data}.}
 
 \item{time_start}{User enters the time at which the logger was placed in the stream network}
 

@@ -2,8 +2,8 @@
 #'
 #' @description This function takes a data frame with field observations of wet/dry status and SpC and generates both a confusion matrix for the wet/dry observations and a scatterplot comparing estimated SpC from the STICs to field-measured values.
 #'
-#' @param stic_data classified STIC data frame with the variable names of that produced by `classify_wetdry`
-#' @param field_observations The input data frame of field observations must include a datetime column (in Posixct format), as well as a column labeled wetdry consisting of the character strings “wet” or “dry” (as in the processed STIC data itself). Additionally, if field data on SpC was collected (e.g., with a sonde), this should be included as a third column called SpC, and units should be in µS/cm.
+#' @param stic_data classified STIC data frame with the variable names of that produced by \link{classify_wetdry}
+#' @param field_observations The input data frame of field observations must include a \code{datetime} column (in Posixct format), as well as a column labeled \code{wetdry} consisting of the character strings “wet” or “dry” (as in the processed STIC data itself). Additionally, if field data on SpC was collected (e.g., with a sonde), this should be included as a third column called \code{SpC}, and units should be in µS/cm.
 #'
 #' @return A confusion matrix (if just field wet/dry observations are included) and an SpC scatter plot if field measurements of SpC are included.
 #' @export
@@ -12,13 +12,13 @@
 
 validate_stic_data <- function(stic_data, field_observations) {
 
-  field_observations <- field_observations %>%
-    mutate(datetime = lubridate::round_date(datetime, "15 minutes")) %>%
-    rename(wetdry_field = wetdry) %>%
-    rename(SpC_field = SpC)
+  field_observations <- field_observations |>
+    dplyr::mutate(datetime = lubridate::round_date(datetime, "15 minutes")) |>
+    dplyr::rename(wetdry_field = wetdry) |>
+    dplyr::rename(SpC_field = SpC)
 
 
-  stic_and_field_obs <- left_join(stic_data, field_observations, by = "datetime")
+  stic_and_field_obs <- dplyr::left_join(stic_data, field_observations, by = "datetime")
 
   # Replacing na values in wetdry_field column with blank string
   stic_and_field_obs$wetdry_field[is.na(stic_and_field_obs$wetdry_field)] <- ""
@@ -46,7 +46,6 @@ validate_stic_data <- function(stic_data, field_observations) {
          xlab = "STIC-measured SpC", ylab = "Field_measured_SpC")
 
   }
-
 
   return(confusion_matrix)
 

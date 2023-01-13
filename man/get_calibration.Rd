@@ -7,15 +7,15 @@
 get_calibration(calibration_data, method = "linear")
 }
 \arguments{
-\item{calibration_data}{STIC calibration data frame with columns "standard" and "condUncal"}
+\item{calibration_data}{STIC calibration data frame with columns \code{"standard"} and \code{"condUncal"}.}
 
-\item{method}{method for creating interpolation: "linear" (default) or "exponential"}
+\item{method}{method for creating interpolation: \code{"linear"} (default) or \code{"exponential"}.}
 }
 \value{
-A fitted model object relating `SpC` to the uncalibrated conductivity values measured by the STIC
+A fitted model object relating \code{SpC} to the uncalibrated conductivity values measured by the STIC
 }
 \description{
-This is a function to fit specific conductivity (`SpC`) standards and uncalibrated conductivity measured by the STIC to a model object. This model can then be used to predict SpC values using `apply_calibration`.
+This is a function to fit specific conductivity (\code{SpC}) standards and uncalibrated conductivity measured by the STIC to a model object. This model can then be used to predict SpC values using \link{apply_calibration}.
 }
 \examples{
 head(calibration_standard_data)

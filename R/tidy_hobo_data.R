@@ -4,11 +4,14 @@
 # to produce a tidy data frame and/or saved CSV output.
 #'
 #' @param infile filename (including path or URL if needed) for a raw CSV file exported from HOBOware.
-#' @param outfile filename (including path if needed) to save the tidied data frame. Defaults to FALSE, in which case tidied data will not be saved.
+#' @param outfile filename (including path if needed) to save the tidied data frame. Defaults to \code{FALSE}, in which case tidied data will not be saved.
 #' @param convert_utc a logical argument indicating whether the user would like to convert from the time zone associated with their CSV to UTC
 #'
-#' @return a tidied data frame with the following column names: datetime, condUncal, tempC
+#' @return a tidied data frame with the following column names: \code{datetime}, \code{condUncal}, \code{tempC}.
 #' @export
+#' @import stringr
+#' @import dplyr
+#' @import lubridate
 #'
 #' @examples
 #' clean_data <- tidy_hobo_data(infile = "https://raw.githubusercontent.com/HEAL-KGS/STICr/main/data/raw_hobo_data.csv", outfile = FALSE, convert_utc = TRUE)
@@ -21,8 +24,9 @@ tidy_hobo_data <- function(infile, outfile = FALSE, convert_utc = TRUE) {
   raw_data <- read.csv(infile, skip = 1)
 
   # get numeric version of number of hours to add from datetime column name
-  utc_time_offset <- raw_data |>
-    select(contains("Date")) |>
+  utc_time_offset <-
+    raw_data |>
+    dplyr::select(contains("Date")) |>
     colnames() |>
     str_sub(start = -5, end = -4) |>
     as.numeric()
@@ -46,7 +50,7 @@ tidy_hobo_data <- function(infile, outfile = FALSE, convert_utc = TRUE) {
   if (convert_utc == TRUE) {
 
     tidy_data <- tidy_data |>
-      mutate(datetime = datetime + (utc_time_offset * 60 * 60))
+      dplyr::mutate(datetime = datetime + (utc_time_offset * 60 * 60))
 
   }
 

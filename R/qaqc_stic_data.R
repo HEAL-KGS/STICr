@@ -19,7 +19,7 @@
 #' @return The same data frame as input, but with new QAQC columns or a single, concatenated QAQC column
 #' @export
 #'
-#' @examples qaqc_df <- qaqc_stic_data(classified_df, spc_neg_correction = TRUE, inspect_classification = TRUE, concatenate_flags = TRUE)
+#' @examples qaqc_df <- qaqc_stic_data(classified_df, spc_neg_correction = TRUE, inspect_classification = TRUE, anomaly_size = 4, window_size = 1000, concatenate_flags = TRUE)
 
 qaqc_stic_data <- function(stic_data, spc_neg_correction = TRUE, inspect_classification = TRUE,
                            anomaly_size = 4, window_size = 1000, concatenate_flags = TRUE) {
@@ -40,6 +40,11 @@ qaqc_stic_data <- function(stic_data, spc_neg_correction = TRUE, inspect_classif
 
   if (inspect_classification == TRUE) {
 
+
+    # Get run lengths from rle object
+    rle_object <- rle(stic_data$wetdry)
+    run_lengths <- rle_object$lengths
+
     # This is working
     stic_data <- dplyr::group_by(stic_data, data.table::rleid(wetdry)) |>
       dplyr::mutate(n = n()) |>
@@ -48,11 +53,23 @@ qaqc_stic_data <- function(stic_data, spc_neg_correction = TRUE, inspect_classif
                     & wetdry != lead(wetdry, 1, default = "")
                     & lag(n, 1, default = 0) > 1000 & lead(n, 1, default = 0) > 1000)
 
-    stic_data$anomaly <- dplyr::if_else(stic_data$anomaly_tf == TRUE, "A", "" )
+
+    i_small <- which(run_lengths < anomaly_size)
+
+    for (i in i_small){
+      i_window <- run_lengths[i_small-1] + run_lengths[i_small+1]
+
+      if (i_window > window_size) {
+        anomaly_start <- sum(run_lengths[1:(i-1)])+1
+        anomaly_end <- anomaly_start + run_lengths[i]-1
+      }
+    }
+
+    stic_data$anomaly <- rep("", nrow(stic_data))
+    df[anomaly_start:anomaly_end, "anomaly"] <- "A"
 
     stic_data <- stic_data |>
       dplyr::select(-c(data.table::rleid(wetdry), anomaly_tf, n))
-
   }
 
   if (concatenate_flags == TRUE) {

@@ -38,5 +38,5 @@ Users can select which operations are to be performed, and a character flag is a
 Users also have to option to concatenate multiple flags into one column. QAQC options currently include...
 }
 \examples{
-qaqc_df <- qaqc_stic_data(classified_df, spc_neg_correction = TRUE, inspect_classification = TRUE, concatenate_flags = TRUE)
+qaqc_df <- qaqc_stic_data(classified_df, spc_neg_correction = TRUE, inspect_classification = TRUE, anomaly_size = 4, window_size = 1000, concatenate_flags = TRUE)
 }

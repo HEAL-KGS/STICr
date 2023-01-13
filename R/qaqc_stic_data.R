@@ -17,7 +17,7 @@
 #' @return The same data frame as input, but with new QAQC columns or a single, concatenated QAQC column
 #' @export
 #'
-#' @examples qaqc_df <- qaqc_stic_data(classified_df, spc_neg_correction = TRUE, inspect_classification = TRUE, concatenate_flags = TRUE)
+#' @examples qaqc_df <- qaqc_stic_data(classified_df, spc_neg_correction = TRUE, inspect_classification = TRUE, anomaly_size = 4, window_size = 1000, concatenate_flags = TRUE)
 
 qaqc_stic_data <- function(stic_data, spc_neg_correction = TRUE, inspect_classification = TRUE,
                            anomaly_size = 4, window_size = 1000, concatenate_flags = TRUE) {

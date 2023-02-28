@@ -30,17 +30,18 @@ test_threshold <- function(stic_data, calibration) {
   # Now can make a df for plotting by classifying according the the three absolute thresholds
   threshold_df <-
     stic_data |>
-    dplyr::mutate(wetdry_yint = dplyr::if_else(SpC >= y_int, "wet", "dry")) |>
-    dplyr::mutate(wetdry_yint_plus_se = dplyr::if_else(SpC >= y_int_plus_se, "wet", "dry")) |>
-    dplyr::mutate(wetdry_yint_minus_se = dplyr::if_else(SpC >= y_int_minus_se, "wet", "dry"))
+    dplyr::mutate(yint = dplyr::if_else(SpC >= y_int, "wet", "dry")) |>
+    dplyr::mutate(yint_plus_se = dplyr::if_else(SpC >= y_int_plus_se, "wet", "dry")) |>
+    dplyr::mutate(yint_minus_se = dplyr::if_else(SpC >= y_int_minus_se, "wet", "dry"))
 
   # Reshaping this for categorical plotting
   threshold_long <-
     threshold_df |>
-    tidyr::pivot_longer(cols = c(wetdry_yint, wetdry_yint_plus_se, wetdry_yint_minus_se),
+    tidyr::pivot_longer(cols = c(yint, yint_plus_se, yint_minus_se),
                         names_to = "Threshold", values_to = "classification")
 
-  # Making a time series line graph of wet vs dry colored by the three methods
+  # Making a time series bar graph of wet network proportion, with bars for y-int,
+  # y-int plus standard error, and y-int minus standard error
   wet_network_prop <-
     threshold_long |>
     dplyr::group_by(Threshold) |>
@@ -48,11 +49,18 @@ test_threshold <- function(stic_data, calibration) {
                      n_timesteps = n() ) |>
     dplyr::mutate(percent_time_wet = n_wet/n_timesteps)
 
-  time_series_plot <-
-    ggplot(wet_network_prop, aes(x = Threshold, y = percent_time_wet)) +
-    geom_col()
+  wnp_subset <- wet_network_prop %>%
+    select(Threshold, percent_time_wet)
 
-  return(time_series_plot)
+  wnp_subset_transpose <- wnp_subset %>%
+    pivot_wider(names_from = Threshold, values_from = percent_time_wet)
+
+  wnp_matrix <- as.matrix(wnp_subset_transpose)
+
+  threshold_plot <-
+    barplot(wnp_matrix)
+
+  return(threshold_plot)
 
 }
 

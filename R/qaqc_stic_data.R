@@ -5,7 +5,6 @@
 #' Users also have to option to concatenate multiple flags into one column. QAQC options currently include: (1) correction and flagging of negative SPC values resulting from the calibration process, i.e., changing the negative values to 0 and flagging this
 #' (2) inspecting the wetdry classification time series for potential anomalies based on user-defined windows
 #'
-#'
 #' @param stic_data A data frame with classified STIC data, such as that produced by \code{classify_wetdry}.
 #' @param spc_neg_correction a logical argument indicating whether the user would like to correct negative SPC values resulting from the calibration process to 0.
 #' The character code associated with this correction is \code{"N"}.

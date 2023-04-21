@@ -46,15 +46,6 @@ qaqc_stic_data <- function(stic_data, spc_neg_correction = TRUE, inspect_classif
     rle_object <- rle(stic_data$wetdry)
     run_lengths <- rle_object$lengths
 
-    # This is working
-    stic_data <- dplyr::group_by(stic_data, data.table::rleid(wetdry)) |>
-      dplyr::mutate(n = n()) |>
-      dplyr::ungroup() |>
-      dplyr::mutate(anomaly_tf = wetdry != lag(wetdry, 1, default = "")
-                    & wetdry != lead(wetdry, 1, default = "")
-                    & lag(n, 1, default = 0) > 1000 & lead(n, 1, default = 0) > 1000)
-
-
     i_small <- which(run_lengths < anomaly_size)
 
     for (i in i_small){

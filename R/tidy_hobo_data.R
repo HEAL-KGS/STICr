@@ -34,9 +34,9 @@ tidy_hobo_data <- function(infile, outfile = FALSE, convert_utc = TRUE) {
     as.numeric()
 
   if ("Date" %in% names(raw_data)) {
-    logger_record$datetime <- mdy_hms(paste0(logger_record$Date, " ", logger_record$Time..GMT.05.00))
+    raw_data$datetime <- mdy_hms(paste0(raw_data$Date, " ", raw_data$Time..GMT.05.00))
   } else {
-    logger_record$datetime <- mdy_hms(logger_record$Date.Time..GMT.05.00)
+    raw_data$datetime <- mdy_hms(raw_data$Date.Time..GMT.05.00)
   }
 
   if ("lum" %in% names(raw_data)) {

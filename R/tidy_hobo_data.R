@@ -31,10 +31,12 @@ tidy_hobo_data <- function(infile, outfile = FALSE, convert_utc = TRUE) {
     str_sub(start = -5, end = -4) |>
     as.numeric()
 
+  raw_data$datetime <- NA
+
   if ("Date" %in% names(raw_data)) {
-    raw_data$datetime <- mdy_hms(paste0(raw_data$Date, " ", raw_data$Time..GMT.05.00))
+    raw_data$datetime <- mdy_hms(paste0(raw_data$Date, " ", raw_data$Time..GMT.06.00))
   } else {
-    raw_data$datetime <- mdy_hms(raw_data$Date.Time..GMT.05.00)
+    raw_data$datetime <- mdy_hms(raw_data$Date.Time..GMT.06.00)
   }
 
   if ("lum" %in% names(raw_data)) {

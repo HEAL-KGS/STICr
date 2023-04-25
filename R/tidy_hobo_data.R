@@ -39,7 +39,7 @@ tidy_hobo_data <- function(infile, outfile = FALSE, convert_utc = TRUE) {
     raw_data$datetime <- mdy_hms(raw_data$Date.Time..GMT.06.00)
   }
 
-  if ("lum" %in% names(raw_data)) {
+  if (any(str_detect(names(raw_data), "lum"))) {
 
     tidy_data <-
       raw_data |>
@@ -47,10 +47,7 @@ tidy_hobo_data <- function(infile, outfile = FALSE, convert_utc = TRUE) {
                          .fn = function(x){"tempC"}) |>
       dplyr::rename_with(.cols = contains("Intensity"),
                          .fn = function(x){"condUncal"}) |>
-      dplyr::rename_with(.cols = contains("Date"),
-                         .fn = function(x){"datetime"}) |>
       dplyr::select(datetime, condUncal, tempC) |>
-      dplyr::mutate(datetime = lubridate::mdy_hms(datetime)) |>
       dplyr::mutate(tempC = as.numeric(tempC),
                     condUncal = gsub(",", "", condUncal),
                     condUncal = as.numeric(condUncal)) |>
@@ -65,13 +62,11 @@ tidy_hobo_data <- function(infile, outfile = FALSE, convert_utc = TRUE) {
                          .fn = function(x){"tempC"}) |>
       dplyr::rename_with(.cols = contains("Intensity"),
                          .fn = function(x){"condUncal"}) |>
-      dplyr::rename_with(.cols = contains("Date"),
-                         .fn = function(x){"datetime"}) |>
       dplyr::select(datetime, condUncal, tempC) |>
-      dplyr::mutate(datetime = lubridate::mdy_hms(datetime)) |>
       dplyr::mutate(tempC = as.numeric(tempC),
                     condUncal = gsub(",", "", condUncal),
                     condUncal = as.numeric(condUncal))
+
   }
 
   # UTC conversion if indicated by user

@@ -18,8 +18,6 @@
 #' head(clean_data)
 #'
 
-infile <- "20210915_20946486_STIC.csv"
-
 tidy_hobo_data <- function(infile, outfile = FALSE, convert_utc = TRUE) {
 
   # read in file

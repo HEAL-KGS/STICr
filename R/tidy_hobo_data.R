@@ -74,21 +74,6 @@ tidy_hobo_data <- function(infile, outfile = FALSE, convert_utc = TRUE) {
                     condUncal = as.numeric(condUncal))
   }
 
-  # tidy columns and names
-  tidy_data <-
-    raw_data |>
-    dplyr::rename_with(.cols = contains("Temp"),
-                       .fn = function(x){"tempC"}) |>
-    dplyr::rename_with(.cols = contains("Intensity"),
-                       .fn = function(x){"condUncal"}) |>
-    dplyr::rename_with(.cols = contains("Date"),
-                       .fn = function(x){"datetime"}) |>
-    dplyr::select(datetime, condUncal, tempC) |>
-    dplyr::mutate(datetime = lubridate::mdy_hms(datetime)) |>
-    dplyr::mutate(tempC = as.numeric(tempC),
-                  condUncal = gsub(",", "", condUncal),
-                  condUncal = as.numeric(condUncal))
-
   # UTC conversion if indicated by user
   if (convert_utc == TRUE) {
 

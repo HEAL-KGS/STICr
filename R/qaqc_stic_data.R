@@ -29,14 +29,14 @@ qaqc_stic_data <- function(stic_data, spc_neg_correction = TRUE, inspect_classif
 
     # Deal with negative spc values
     stic_data <- stic_data |>
-      dplyr::mutate(SpC = dplyr::if_else(
-        condition = SpC <= -1,
-        true = 0,
-        false = SpC)) |>
       dplyr::mutate(negative_SpC = dplyr::if_else(
-        condition = SpC == 0,
+        condition = SpC < 0,
         true = "N",
-        false = "" ))
+        false = "" )) |>
+      dplyr::mutate(SpC = dplyr::if_else(
+        condition = SpC <= 0,
+        true = 0,
+        false = SpC))
   }
 
   if (inspect_classification == TRUE) {
@@ -47,20 +47,18 @@ qaqc_stic_data <- function(stic_data, spc_neg_correction = TRUE, inspect_classif
 
     i_small <- which(run_lengths < anomaly_size)
 
+    stic_data$anomaly <- rep("", nrow(stic_data))
+
     for (i in i_small){
-      i_window <- run_lengths[i_small-1] + run_lengths[i_small+1]
+      i_window <- run_lengths[i-1] + run_lengths[i+1]
 
       if (i_window > window_size) {
         anomaly_start <- sum(run_lengths[1:(i-1)])+1
         anomaly_end <- anomaly_start + run_lengths[i]-1
+
+        stic_data[anomaly_start:anomaly_end, "anomaly"] <- "A"
       }
     }
-
-    stic_data$anomaly <- rep("", nrow(stic_data))
-    stic_data[anomaly_start:anomaly_end, "anomaly"] <- "A"
-
-    stic_data <- stic_data |>
-      dplyr::select(-c(data.table::rleid(wetdry), anomaly_tf, n))
   }
 
   if (concatenate_flags == TRUE) {
@@ -71,7 +69,7 @@ qaqc_stic_data <- function(stic_data, spc_neg_correction = TRUE, inspect_classif
       stringr::str_c(stic_data$negative_SpC, '', stic_data$anomaly, '', stic_data$outside_std_range)
 
     stic_data <- stic_data |>
-      select(-c(negative_SpC, anomaly, outside_range))
+      select(-c(negative_SpC, anomaly, outside_std_range))
 
   }
 

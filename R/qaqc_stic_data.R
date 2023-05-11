@@ -41,7 +41,6 @@ qaqc_stic_data <- function(stic_data, spc_neg_correction = TRUE, inspect_classif
 
   if (inspect_classification == TRUE) {
 
-
     # Get run lengths from rle object
     rle_object <- rle(stic_data$wetdry)
     run_lengths <- rle_object$lengths
@@ -58,7 +57,7 @@ qaqc_stic_data <- function(stic_data, spc_neg_correction = TRUE, inspect_classif
     }
 
     stic_data$anomaly <- rep("", nrow(stic_data))
-    df[anomaly_start:anomaly_end, "anomaly"] <- "A"
+    stic_data[anomaly_start:anomaly_end, "anomaly"] <- "A"
 
     stic_data <- stic_data |>
       dplyr::select(-c(data.table::rleid(wetdry), anomaly_tf, n))
@@ -69,7 +68,7 @@ qaqc_stic_data <- function(stic_data, spc_neg_correction = TRUE, inspect_classif
     # concatenate the QAQC columns with col codes: "N" for negative SpC;
     # "A" for anomalous classification; "O" for outside standard range
     stic_data$QAQC <-
-      stringr::str_c(stic_data$negative_SpC, '', stic_data$anomaly, '', stic_data$outside_range)
+      stringr::str_c(stic_data$negative_SpC, '', stic_data$anomaly, '', stic_data$outside_std_range)
 
     stic_data <- stic_data |>
       select(-c(negative_SpC, anomaly, outside_range))

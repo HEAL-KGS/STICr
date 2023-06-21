@@ -52,7 +52,7 @@ qaqc_stic_data <- function(stic_data, spc_neg_correction = TRUE, inspect_classif
     for (i in i_small){
       i_window <- run_lengths[i-1] + run_lengths[i+1]
 
-      if (i_window > window_size) {
+      if (i_window >= window_size) {
         anomaly_start <- sum(run_lengths[1:(i-1)])+1
         anomaly_end <- anomaly_start + run_lengths[i]-1
 

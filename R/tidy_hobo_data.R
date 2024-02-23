@@ -14,7 +14,9 @@
 #' @import lubridate
 #'
 #' @examples
-#' clean_data <- tidy_hobo_data(infile = "https://raw.githubusercontent.com/HEAL-KGS/STICr/main/data/raw_hobo_data.csv", outfile = FALSE, convert_utc = TRUE)
+#' clean_data <-
+#'   tidy_hobo_data(infile = "https://raw.githubusercontent.com/HEAL-KGS/STICr/main/data/raw_hobo_data.csv",
+#'   outfile = FALSE, convert_utc = TRUE)
 #' head(clean_data)
 #'
 

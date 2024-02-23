@@ -11,7 +11,9 @@
 #' @export
 #' @import dplyr
 #'
-#' @examples classified_df <- classify_wetdry(calibrated_stic_data, classify_var = "SpC", method = "absolute", threshold = 200)
+#' @examples classified_df <-
+#'   classify_wetdry(calibrated_stic_data,
+#'   classify_var = "SpC", method = "absolute", threshold = 200)
 #' head(classified_df)
 
 classify_wetdry <- function(stic_data, classify_var, threshold, method) {

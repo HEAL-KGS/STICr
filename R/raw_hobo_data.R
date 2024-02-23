@@ -1,6 +1,6 @@
 #' raw_hobo_data
 #'
-#' Raw HOBO data for one STIC
+#' @description Raw HOBO data for one STIC
 #'
 #' @docType data
 #'

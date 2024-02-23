@@ -1,6 +1,6 @@
 #' tidy_stic_data
 #'
-#' Tidied STIC data (output of the function 'tidy_hobo_data')
+#' @description Tidied STIC data (output of the function `tidy_hobo_data`)
 #'
 #' @docType data
 #'

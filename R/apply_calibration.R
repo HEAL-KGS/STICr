@@ -14,10 +14,11 @@
 #' calibrated_df <- apply_calibration(tidy_stic_data, calibration, outside_range_flag = TRUE)
 #' head(calibrated_df)
 #'
+#'
 apply_calibration <- function(stic_data, calibration, outside_range_flag = TRUE) {
 
   # check that lm model is correct
- # if (class(calibration) != "lm") stop("Error - calibration should be a fitted lm model")
+  if (class(calibration) != "lm") stop("Error - calibration should be a fitted lm model")
 
   # apply fitted model to STIC data
   just_spc <- predict(object = calibration, newdata = stic_data)
@@ -28,7 +29,7 @@ apply_calibration <- function(stic_data, calibration, outside_range_flag = TRUE)
   if (outside_range_flag == TRUE) {
 
     # Extract max and min of calibration standards from model object
-    model_data <- lm_calibration$model
+    model_data <- calibration$model
     standards <- model_data$standard
     min_standard <- min(standards, na.rm = TRUE)
     max_standard <- max(standards, na.rm = TRUE)

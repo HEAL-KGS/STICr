@@ -35,7 +35,7 @@ qaqc_stic_data <- function(stic_data, spc_neg_correction = TRUE, inspect_classif
     stic_data <- stic_data |>
       dplyr::mutate(negative_SpC = dplyr::if_else(
         condition = SpC < 0,
-        true = "N",
+        true = "C",
         false = "" )) |>
       dplyr::mutate(SpC = dplyr::if_else(
         condition = SpC <= 0,
@@ -60,7 +60,7 @@ qaqc_stic_data <- function(stic_data, spc_neg_correction = TRUE, inspect_classif
         anomaly_start <- sum(run_lengths[1:(i-1)])+1
         anomaly_end <- anomaly_start + run_lengths[i]-1
 
-        stic_data[anomaly_start:anomaly_end, "anomaly"] <- "A"
+        stic_data[anomaly_start:anomaly_end, "anomaly"] <- "D"
       }
     }
   }

@@ -7,17 +7,20 @@
 #'
 #' @param stic_data A data frame with classified STIC data, such as that produced by \code{classify_wetdry}.
 #' @param spc_neg_correction a logical argument indicating whether the user would like to correct negative SPC values resulting from the calibration process to 0.
-#' The character code associated with this correction is \code{"N"}.
+#' The character code associated with this correction is \code{"C"}.
 #' @param inspect_classification a logical argument indicating whether the user would like to identify instances in which either a wet or dry reading is surrounded on both sides by 1000 or more observations of its opposite.
 #' This operation is meant to identify potentially suspect binary wet/dry data points for further examination.
-#' The character code associated with this operation is \code{"A"}.
+#' The character code associated with this operation is \code{"D"}.
 #' @param anomaly_size a numeric argument specifying the maximum size (i.e., number of observations) of a clustered group of points that can be flagged as an anomaly
 #' @param window_size a numeric argument specifying the minimum size (i.e., number of observations) that the anomaly must be surrounded by in order to be flagged
 #' @param concatenate_flags a logical argument indicating whether the user would like to combine the character codes generated into a single QAQC flag column.
 #' @import dplyr
 #' @import data.table
 #'
-#' @return The same data frame as input, but with new QAQC columns or a single, concatenated QAQC column
+#' @return The same data frame as input, but with new QAQC columns or a single, concatenated QAQC column. The QAQC output
+#' Can include: \code{"C"}, meaning the calibrated SpC value was negative from `spc_neg_correction`; \code{"D"}, meaning the point was identified as
+#' a deviation or anomaly based on a moving window from `inspect_classification`; or \code{"O"}, meaning the calibrated SpC was
+#' outside the standard range based on the function \code{apply_calibration}.
 #' @export
 #'
 #' @examples qaqc_df <-
@@ -67,8 +70,8 @@ qaqc_stic_data <- function(stic_data, spc_neg_correction = TRUE, inspect_classif
 
   if (concatenate_flags == TRUE) {
 
-    # concatenate the QAQC columns with col codes: "N" for negative SpC;
-    # "A" for anomalous classification; "O" for outside standard range
+    # concatenate the QAQC columns with col codes: "C" for negative SpC;
+    # "D" for anomalous classification; "O" for outside standard range
     stic_data$QAQC <-
       stringr::str_c(stic_data$negative_SpC, '', stic_data$anomaly, '', stic_data$outside_std_range)
 

@@ -20,6 +20,9 @@
 
 trim_hobo_data <- function(stic_data, time_start = "2021-07-16 18:00:00", time_end = "2021-07-27 01:00:00") {
 
+  # bind variables
+  datetime <- NULL
+
   # change the time_start and time_end arguments to POSIXct using lubridate
   time_start <- lubridate::ymd_hms(time_start)
   time_end <- lubridate::ymd_hms(time_end)

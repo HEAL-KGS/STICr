@@ -17,12 +17,15 @@
 #' @examples
 #' clean_data <-
 #'   tidy_hobo_data(
-#'   infile = "https://raw.githubusercontent.com/HEAL-KGS/STICr/main/data/raw_hobo_data.csv",
+#'   infile = "https://samzipper.com/data/raw_hobo_data.csv",
 #'   outfile = FALSE, convert_utc = TRUE)
 #' head(clean_data)
 #'
 
 tidy_hobo_data <- function(infile, outfile = FALSE, convert_utc = TRUE) {
+
+  # bind variables
+  datetime <- wetdry <- SpC <- condUncal <- tempC <- NULL
 
   # read in file
   raw_data <- read.csv(infile, skip = 1)

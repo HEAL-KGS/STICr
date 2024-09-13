@@ -22,7 +22,7 @@ This function loads raw HOBO STIC CSV files and cleans up columns and headers
 \examples{
 clean_data <-
   tidy_hobo_data(
-  infile = "https://raw.githubusercontent.com/HEAL-KGS/STICr/main/data/raw_hobo_data.csv",
+  infile = "https://samzipper.com/data/raw_hobo_data.csv",
   outfile = FALSE, convert_utc = TRUE)
 head(clean_data)
 

@@ -11,11 +11,15 @@
 #' @importFrom graphics barplot
 #' @export
 #'
-#' @examples lm_calibration <- get_calibration(calibration_standard_data, method = "linear")
+#' @examples lm_calibration <- get_calibration(calibration_standard_data)
 #' threshold_testing_plot <- test_threshold(stic_data = classified_df, calibration = lm_calibration)
 #'
 
 test_threshold <- function(stic_data, calibration) {
+
+  # bind variables
+  SpC <- yint <- yint_plus_se <- yint_minus_se <- Threshold <- classification <- n_wet <-
+    n_timesteps <- percent_time_wet <- datetime <- condUncal <- tempC <- datetime <- NULL
 
   # Extracting y-intercept
   y_int <- calibration$coefficients[2]

@@ -18,7 +18,7 @@ A time series plot of classified wet/dry observations through time using three d
 This function is intended to allow the user to visually assess the effects of classification threshold uncertainty on STIC classification. It takes the the model object used to calibrate SpC, as well as a classified STIC data frame with column names matching those produced by \link{classify_wetdry}.
 }
 \examples{
-lm_calibration <- get_calibration(calibration_standard_data, method = "linear")
+lm_calibration <- get_calibration(calibration_standard_data)
 threshold_testing_plot <- test_threshold(stic_data = classified_df, calibration = lm_calibration)
 
 }

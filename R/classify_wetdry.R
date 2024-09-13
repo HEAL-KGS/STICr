@@ -10,6 +10,7 @@
 #' @return The same data frame as input, but with a new column called \code{"wetdry"}.
 #' @export
 #' @import dplyr
+#' @importFrom methods is
 #'
 #' @examples classified_df <-
 #'   classify_wetdry(calibrated_stic_data,

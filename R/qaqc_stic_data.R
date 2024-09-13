@@ -31,6 +31,9 @@
 qaqc_stic_data <- function(stic_data, spc_neg_correction = TRUE, inspect_classification = TRUE,
                            anomaly_size = 4, window_size = 1000, concatenate_flags = TRUE) {
 
+  # bind variables
+  SpC <- NULL
+
   # check if neg correction is possible
   if (spc_neg_correction & !("SpC" %in% names(stic_data))) stop("Cannot do spc_neg_correction - no SpC column. Change spc_neg_correction to FALSE or provide stic_data with SpC column.")
 

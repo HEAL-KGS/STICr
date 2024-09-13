@@ -9,16 +9,17 @@
 #' @return The same data frame as input, except with a new column called \code{SpC}. This will be in the same units as the data used to develop the model calibration.
 #' @import dplyr
 #' @importFrom stats lm predict
+#' @importFrom methods is
 #' @export
 #'
-#' @examples calibration <- get_calibration(calibration_standard_data, method = "linear")
+#' @examples calibration <- get_calibration(calibration_standard_data)
 #' calibrated_df <- apply_calibration(tidy_stic_data, calibration, outside_range_flag = TRUE)
 #' head(calibrated_df)
 #'
 #'
 apply_calibration <- function(stic_data, calibration, outside_range_flag = TRUE) {
 
-  # check that lm model is correct
+    # check that lm model is correct
   if (!is(calibration, "lm")) stop("Error - calibration should be a fitted lm model")
 
   # apply fitted model to STIC data

@@ -14,6 +14,10 @@
 
 validate_stic_data <- function(stic_data, field_observations) {
 
+  # bind variables
+  datetime <- wetdry <- SpC <- NULL
+
+  # transform field observations
   field_observations <- field_observations |>
     dplyr::mutate(datetime = lubridate::round_date(datetime, "15 minutes")) |>
     dplyr::rename(wetdry_field = wetdry) |>

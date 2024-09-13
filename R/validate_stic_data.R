@@ -9,11 +9,11 @@
 #' @export
 #'
 #' @examples data_validation_confusion_matrix <-
-#'   validate_stic_data(stic_data = classified_df,
-#'   field_observations = field_obs)
-
+#'   validate_stic_data(
+#'     stic_data = classified_df,
+#'     field_observations = field_obs
+#'   )
 validate_stic_data <- function(stic_data, field_observations) {
-
   # bind variables
   datetime <- wetdry <- SpC <- NULL
 
@@ -47,15 +47,10 @@ validate_stic_data <- function(stic_data, field_observations) {
 
   # Producing the plot if user has supplied "SpC" column
   if ("SpC_field" %in% colnames(stic_and_field_obs)) {
-
     plot(stic_and_field_obs$SpC, stic_and_field_obs$SpC_field,
-         xlab = "STIC-measured SpC", ylab = "Field_measured_SpC")
-
+      xlab = "STIC-measured SpC", ylab = "Field_measured_SpC"
+    )
   }
 
   return(confusion_matrix)
-
 }
-
-
-

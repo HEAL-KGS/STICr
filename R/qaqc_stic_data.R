@@ -23,14 +23,14 @@
 #' @export
 #'
 #' @examples qaqc_df <-
-#'   qaqc_stic_data(classified_df, spc_neg_correction = TRUE,
-#'   inspect_classification = TRUE, anomaly_size = 4,
-#'   window_size = 100, concatenate_flags = TRUE)
+#'   qaqc_stic_data(classified_df,
+#'     spc_neg_correction = TRUE,
+#'     inspect_classification = TRUE, anomaly_size = 4,
+#'     window_size = 100, concatenate_flags = TRUE
+#'   )
 #' head(qaqc_df)
-
 qaqc_stic_data <- function(stic_data, spc_neg_correction = TRUE, inspect_classification = TRUE,
                            anomaly_size = 4, window_size = 1000, concatenate_flags = TRUE) {
-
   # bind variables
   SpC <- NULL
 
@@ -38,22 +38,22 @@ qaqc_stic_data <- function(stic_data, spc_neg_correction = TRUE, inspect_classif
   if (spc_neg_correction & !("SpC" %in% names(stic_data))) stop("Cannot do spc_neg_correction - no SpC column. Change spc_neg_correction to FALSE or provide stic_data with SpC column.")
 
   if (spc_neg_correction == TRUE) {
-
     # Deal with negative spc values
     stic_data <-
       stic_data |>
       dplyr::mutate(negative_SpC = dplyr::if_else(
         condition = SpC < 0,
         true = "C",
-        false = "" )) |>
+        false = ""
+      )) |>
       dplyr::mutate(SpC = dplyr::if_else(
         condition = SpC <= 0,
         true = 0,
-        false = SpC))
+        false = SpC
+      ))
   }
 
   if (inspect_classification == TRUE) {
-
     # Get run lengths from rle object
     rle_object <- rle(stic_data$wetdry)
     run_lengths <- rle_object$lengths
@@ -62,12 +62,12 @@ qaqc_stic_data <- function(stic_data, spc_neg_correction = TRUE, inspect_classif
 
     stic_data$anomaly <- rep("", nrow(stic_data))
 
-    for (i in i_small){
-      i_window <- run_lengths[i-1] + run_lengths[i+1]
+    for (i in i_small) {
+      i_window <- run_lengths[i - 1] + run_lengths[i + 1]
 
       if (i_window > window_size) {
-        anomaly_start <- sum(run_lengths[1:(i-1)])+1
-        anomaly_end <- anomaly_start + run_lengths[i]-1
+        anomaly_start <- sum(run_lengths[1:(i - 1)]) + 1
+        anomaly_end <- anomaly_start + run_lengths[i] - 1
 
         stic_data[anomaly_start:anomaly_end, "anomaly"] <- "D"
       }
@@ -75,7 +75,6 @@ qaqc_stic_data <- function(stic_data, spc_neg_correction = TRUE, inspect_classif
   }
 
   if (concatenate_flags == TRUE) {
-
     # concatenate the QAQC columns with col codes: "C" for negative SpC;
     # "D" for anomalous classification; "O" for outside standard range
     #
@@ -90,11 +89,7 @@ qaqc_stic_data <- function(stic_data, spc_neg_correction = TRUE, inspect_classif
     stic_data <-
       stic_data |>
       dplyr::select(-any_of(c("negative_SpC", "anomaly", "outside_std_range")))
-
   }
 
   return(stic_data)
-
 }
-
-

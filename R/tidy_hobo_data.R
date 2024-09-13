@@ -17,13 +17,12 @@
 #' @examples
 #' clean_data <-
 #'   tidy_hobo_data(
-#'   infile = "https://samzipper.com/data/raw_hobo_data.csv",
-#'   outfile = FALSE, convert_utc = TRUE)
+#'     infile = "https://samzipper.com/data/raw_hobo_data.csv",
+#'     outfile = FALSE, convert_utc = TRUE
+#'   )
 #' head(clean_data)
 #'
-
 tidy_hobo_data <- function(infile, outfile = FALSE, convert_utc = TRUE) {
-
   # bind variables
   datetime <- wetdry <- SpC <- condUncal <- tempC <- NULL
 
@@ -45,47 +44,61 @@ tidy_hobo_data <- function(infile, outfile = FALSE, convert_utc = TRUE) {
   date_time_string <- paste0("Date.Time..GMT.0", utc_time_offset, ".00")
 
   if ("Date" %in% names(raw_data)) {
-    raw_data$datetime <- lubridate::mdy_hms(paste0(raw_data$Date, " ", raw_data[,time_string]))
+    raw_data$datetime <- lubridate::mdy_hms(paste0(raw_data$Date, " ", raw_data[, time_string]))
   } else {
-    raw_data$datetime <- lubridate::mdy_hms(raw_data[,date_time_string])
+    raw_data$datetime <- lubridate::mdy_hms(raw_data[, date_time_string])
   }
 
   if (any(str_detect(names(raw_data), "lum"))) {
-
     tidy_data <-
       raw_data |>
-      dplyr::rename_with(.cols = contains("Temp"),
-                         .fn = function(x){"tempC"}) |>
-      dplyr::rename_with(.cols = contains("Intensity"),
-                         .fn = function(x){"condUncal"}) |>
+      dplyr::rename_with(
+        .cols = contains("Temp"),
+        .fn = function(x) {
+          "tempC"
+        }
+      ) |>
+      dplyr::rename_with(
+        .cols = contains("Intensity"),
+        .fn = function(x) {
+          "condUncal"
+        }
+      ) |>
       dplyr::select(datetime, condUncal, tempC) |>
-      dplyr::mutate(tempC = as.numeric(tempC),
-                    condUncal = gsub(",", "", condUncal),
-                    condUncal = as.numeric(condUncal)) |>
-      dplyr::mutate(tempC = (tempC - 32) * 5/9) |>
+      dplyr::mutate(
+        tempC = as.numeric(tempC),
+        condUncal = gsub(",", "", condUncal),
+        condUncal = as.numeric(condUncal)
+      ) |>
+      dplyr::mutate(tempC = (tempC - 32) * 5 / 9) |>
       dplyr::mutate(condUncal = 10.7639104167 * condUncal)
-
   } else {
-
     tidy_data <-
       raw_data |>
-      dplyr::rename_with(.cols = contains("Temp"),
-                         .fn = function(x){"tempC"}) |>
-      dplyr::rename_with(.cols = contains("Intensity"),
-                         .fn = function(x){"condUncal"}) |>
+      dplyr::rename_with(
+        .cols = contains("Temp"),
+        .fn = function(x) {
+          "tempC"
+        }
+      ) |>
+      dplyr::rename_with(
+        .cols = contains("Intensity"),
+        .fn = function(x) {
+          "condUncal"
+        }
+      ) |>
       dplyr::select(datetime, condUncal, tempC) |>
-      dplyr::mutate(tempC = as.numeric(tempC),
-                    condUncal = gsub(",", "", condUncal),
-                    condUncal = as.numeric(condUncal))
-
+      dplyr::mutate(
+        tempC = as.numeric(tempC),
+        condUncal = gsub(",", "", condUncal),
+        condUncal = as.numeric(condUncal)
+      )
   }
 
   # UTC conversion if indicated by user
   if (convert_utc == TRUE) {
-
     tidy_data <- tidy_data |>
       dplyr::mutate(datetime = datetime + (utc_time_offset * 60 * 60))
-
   }
 
   # save data if needed

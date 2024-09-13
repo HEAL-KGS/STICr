@@ -14,9 +14,7 @@
 #' @examples lm_calibration <- get_calibration(calibration_standard_data)
 #' threshold_testing_plot <- test_threshold(stic_data = classified_df, calibration = lm_calibration)
 #'
-
 test_threshold <- function(stic_data, calibration) {
-
   # bind variables
   SpC <- yint <- yint_plus_se <- yint_minus_se <- Threshold <- classification <- n_wet <-
     n_timesteps <- percent_time_wet <- datetime <- condUncal <- tempC <- datetime <- NULL
@@ -41,17 +39,21 @@ test_threshold <- function(stic_data, calibration) {
   # Reshaping this for categorical plotting
   threshold_long <-
     threshold_df |>
-    tidyr::pivot_longer(cols = c(yint, yint_plus_se, yint_minus_se),
-                        names_to = "Threshold", values_to = "classification")
+    tidyr::pivot_longer(
+      cols = c(yint, yint_plus_se, yint_minus_se),
+      names_to = "Threshold", values_to = "classification"
+    )
 
   # Making a time series bar graph of wet network proportion, with bars for y-int,
   # y-int plus standard error, and y-int minus standard error
   wet_network_prop <-
     threshold_long |>
     dplyr::group_by(Threshold) |>
-    dplyr::summarise(n_wet = sum(classification == "wet"),
-                     n_timesteps = dplyr::n() ) |>
-    dplyr::mutate(percent_time_wet = n_wet/n_timesteps)
+    dplyr::summarise(
+      n_wet = sum(classification == "wet"),
+      n_timesteps = dplyr::n()
+    ) |>
+    dplyr::mutate(percent_time_wet = n_wet / n_timesteps)
 
   wnp_subset <-
     wet_network_prop |>
@@ -66,12 +68,9 @@ test_threshold <- function(stic_data, calibration) {
   # make bar chart showing the impacts of classification threshold
   threshold_plot <-
     barplot(wnp_matrix,
-            ylab = "% of Time Wet",
-            xlab = "Threshold for Wet Classification")
+      ylab = "% of Time Wet",
+      xlab = "Threshold for Wet Classification"
+    )
 
   return(threshold_plot)
-
 }
-
-
-

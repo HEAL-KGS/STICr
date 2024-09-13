@@ -14,43 +14,34 @@
 #'
 #' @examples classified_df <-
 #'   classify_wetdry(calibrated_stic_data,
-#'   classify_var = "SpC", method = "absolute", threshold = 200)
+#'     classify_var = "SpC", method = "absolute", threshold = 200
+#'   )
 #' head(classified_df)
-
 classify_wetdry <- function(stic_data, classify_var, threshold, method) {
-
   # check if classify_var exists
   if (!(classify_var %in% colnames(stic_data))) stop("classify_var is not in stic_data")
 
- class_var <- stic_data[ , classify_var]
+  class_var <- stic_data[, classify_var]
 
   if (method == "percent") {
-
     if ((threshold > 1) | (threshold < 0)) stop("Error - threshold should be between 0-1")
 
     # calculate what threshold is in absolute units
-    abs_thres <- threshold*max(class_var)
+    abs_thres <- threshold * max(class_var)
 
     # classify and add to data frame
-    stic_data$wetdry <- dplyr::if_else(class_var >= abs_thres, "wet", "dry" )
-
+    stic_data$wetdry <- dplyr::if_else(class_var >= abs_thres, "wet", "dry")
   } else if (method == "absolute") {
-
     # classify and add to data frame
-    stic_data$wetdry <- dplyr::if_else(class_var >= threshold, "wet", "dry" )
-
+    stic_data$wetdry <- dplyr::if_else(class_var >= threshold, "wet", "dry")
   } else if (method == "y-intercept") {
-
     if (!is(threshold, "lm")) stop("Error - threshold should be a fitted lm model")
 
     y_int <- threshold$coefficients[2]
 
     stic_data$wetdry <- dplyr::if_else(class_var >= y_int, "wet", "dry")
-
-} else {
-
+  } else {
     stop("Unknown method. Please use absolute, percent, or y-intercept.")
-
   }
 
   return(stic_data)

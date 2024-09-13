@@ -11,10 +11,8 @@
 #' lm_calibration <- get_calibration(calibration_standard_data)
 #' summary(lm_calibration)
 #'
-
 get_calibration <- function(calibration_data) {
-
-  calibration <-  lm(standard ~ condUncal, data = calibration_data)
+  calibration <- lm(standard ~ condUncal, data = calibration_data)
 
   return(calibration)
 }

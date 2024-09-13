@@ -40,7 +40,7 @@ classify_wetdry <- function(stic_data, classify_var, threshold, method) {
 
   } else if (method == "y-intercept") {
 
-    if (class(threshold) != "lm") stop("Error - threshold should be a fitted lm model")
+    if (!is(threshold, "lm")) stop("Error - threshold should be a fitted lm model")
 
     y_int <- threshold$coefficients[2]
 

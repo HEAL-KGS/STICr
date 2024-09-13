@@ -3,3 +3,4 @@
 ^README\.Rmd$
 ^LICENSE\.md$
 ^PackageMaintenanceNotes.md
+^cran-comments\.md$

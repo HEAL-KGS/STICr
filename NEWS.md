@@ -1,3 +1,3 @@
-# STICr 0.1
+# STICr 1.0
 
 * Initial CRAN submission.

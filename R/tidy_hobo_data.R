@@ -12,6 +12,7 @@
 #' @import stringr
 #' @import dplyr
 #' @import lubridate
+#' @importFrom utils read.csv write.csv
 #'
 #' @examples
 #' clean_data <-

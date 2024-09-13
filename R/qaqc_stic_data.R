@@ -15,7 +15,6 @@
 #' @param window_size a numeric argument specifying the minimum size (i.e., number of observations) that the anomaly must be surrounded by in order to be flagged
 #' @param concatenate_flags a logical argument indicating whether the user would like to combine the character codes generated into a single QAQC flag column.
 #' @import dplyr
-#' @import data.table
 #'
 #' @return The same data frame as input, but with new QAQC columns or a single, concatenated QAQC column. The QAQC output
 #' Can include: \code{"C"}, meaning the calibrated SpC value was negative from `spc_neg_correction`; \code{"D"}, meaning the point was identified as
@@ -26,16 +25,20 @@
 #' @examples qaqc_df <-
 #'   qaqc_stic_data(classified_df, spc_neg_correction = TRUE,
 #'   inspect_classification = TRUE, anomaly_size = 4,
-#'   window_size = 1000, concatenate_flags = TRUE)
+#'   window_size = 100, concatenate_flags = TRUE)
 #' head(qaqc_df)
 
 qaqc_stic_data <- function(stic_data, spc_neg_correction = TRUE, inspect_classification = TRUE,
                            anomaly_size = 4, window_size = 1000, concatenate_flags = TRUE) {
 
+  # check if neg correction is possible
+  if (spc_neg_correction & !("SpC" %in% names(stic_data))) stop("Cannot do spc_neg_correction - no SpC column. Change spc_neg_correction to FALSE or provide stic_data with SpC column.")
+
   if (spc_neg_correction == TRUE) {
 
     # Deal with negative spc values
-    stic_data <- stic_data |>
+    stic_data <-
+      stic_data |>
       dplyr::mutate(negative_SpC = dplyr::if_else(
         condition = SpC < 0,
         true = "C",
@@ -72,11 +75,18 @@ qaqc_stic_data <- function(stic_data, spc_neg_correction = TRUE, inspect_classif
 
     # concatenate the QAQC columns with col codes: "C" for negative SpC;
     # "D" for anomalous classification; "O" for outside standard range
-    stic_data$QAQC <-
-      stringr::str_c(stic_data$negative_SpC, '', stic_data$anomaly, '', stic_data$outside_std_range)
+    #
+    # some columns will only exist for calibrated data, so only use columns that exist
+    stic_data_qacols <-
+      stic_data |>
+      dplyr::select(any_of(c("negative_SpC", "anomaly", "outside_std_range"))) |>
+      tidyr::unite("QAQC", sep = "", na.rm = T)
 
-    stic_data <- stic_data |>
-      select(-c(negative_SpC, anomaly, outside_std_range))
+    stic_data$QAQC <- stic_data_qacols$QAQC
+
+    stic_data <-
+      stic_data |>
+      dplyr::select(-any_of(c("negative_SpC", "anomaly", "outside_std_range")))
 
   }
 

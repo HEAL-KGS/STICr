@@ -8,6 +8,7 @@
 #'
 #' @return The same data frame as input, except with a new column called \code{SpC}. This will be in the same units as the data used to develop the model calibration.
 #' @import dplyr
+#' @importFrom importFrom stats lm predict
 #' @export
 #'
 #' @examples calibration <- get_calibration(calibration_standard_data, method = "linear")

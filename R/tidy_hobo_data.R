@@ -15,7 +15,8 @@
 #'
 #' @examples
 #' clean_data <-
-#'   tidy_hobo_data(infile = "https://raw.githubusercontent.com/HEAL-KGS/STICr/main/data/raw_hobo_data.csv",
+#'   tidy_hobo_data(
+#'   infile = "https://raw.githubusercontent.com/HEAL-KGS/STICr/main/data/raw_hobo_data.csv",
 #'   outfile = FALSE, convert_utc = TRUE)
 #' head(clean_data)
 #'
@@ -30,7 +31,7 @@ tidy_hobo_data <- function(infile, outfile = FALSE, convert_utc = TRUE) {
     raw_data |>
     dplyr::select(contains("Time")) |>
     colnames() |>
-    str_sub(start = -5, end = -4) |>
+    stringr::str_sub(start = -5, end = -4) |>
     as.numeric()
 
   raw_data$datetime <- NA
@@ -40,9 +41,9 @@ tidy_hobo_data <- function(infile, outfile = FALSE, convert_utc = TRUE) {
   date_time_string <- paste0("Date.Time..GMT.0", utc_time_offset, ".00")
 
   if ("Date" %in% names(raw_data)) {
-    raw_data$datetime <- mdy_hms(paste0(raw_data$Date, " ", raw_data[,time_string]))
+    raw_data$datetime <- lubridate::mdy_hms(paste0(raw_data$Date, " ", raw_data[,time_string]))
   } else {
-    raw_data$datetime <- mdy_hms(raw_data[,date_time_string])
+    raw_data$datetime <- lubridate::mdy_hms(raw_data[,date_time_string])
   }
 
   if (any(str_detect(names(raw_data), "lum"))) {

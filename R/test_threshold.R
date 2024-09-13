@@ -7,8 +7,8 @@
 #'
 #' @return A time series plot of classified wet/dry observations through time using three different absolute classification thresholds: the y-intercept of the fitted model developed in get_calibration, the y-intercept plus one standard error, and the y-intercept minus one standard error
 #' @import dplyr
-#' @import ggplot2
 #' @import tidyr
+#' @importFrom graphics barplot
 #' @export
 #'
 #' @examples lm_calibration <- get_calibration(calibration_standard_data, method = "linear")
@@ -46,19 +46,24 @@ test_threshold <- function(stic_data, calibration) {
     threshold_long |>
     dplyr::group_by(Threshold) |>
     dplyr::summarise(n_wet = sum(classification == "wet"),
-                     n_timesteps = n() ) |>
+                     n_timesteps = dplyr::n() ) |>
     dplyr::mutate(percent_time_wet = n_wet/n_timesteps)
 
-  wnp_subset <- wet_network_prop %>%
-    select(Threshold, percent_time_wet)
+  wnp_subset <-
+    wet_network_prop |>
+    dplyr::select(Threshold, percent_time_wet)
 
-  wnp_subset_transpose <- wnp_subset %>%
-    pivot_wider(names_from = Threshold, values_from = percent_time_wet)
+  wnp_subset_transpose <-
+    wnp_subset |>
+    tidyr::pivot_wider(names_from = Threshold, values_from = percent_time_wet)
 
   wnp_matrix <- as.matrix(wnp_subset_transpose)
 
+  # make bar chart showing the impacts of classification threshold
   threshold_plot <-
-    barplot(wnp_matrix)
+    barplot(wnp_matrix,
+            ylab = "% of Time Wet",
+            xlab = "Threshold for Wet Classification")
 
   return(threshold_plot)
 

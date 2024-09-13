@@ -3,10 +3,10 @@ Type: Package
 Title: Process data from stream temperature, intermittency, and conductivity (STIC) data loggers
 Authors@R: as.person(c(
     person("Sam", "Zipper", email = "samzipper@ku.edu", role = c("aut", "cre"), comment = c(ORCID = "0000-0002-8735-5757")),
-    person("Christopher T.", "Wheeler", email = "christopher.wheeler@ku.edu", role = c("aut")),
-    person("Stephen", "Cook", role = "ctb"),
-    person("Delaney", "Peterson", role = "ctb"),
-    person("Sarah", "Godsey", role = "ctb")
+    person("Christopher T.", "Wheeler", role = "aut", comment = c(ORCID = "0000-0001-9368-383X")),
+    person("Stephen", "Cook", role = "ctb", comment = c(ORCID = "0000-0003-3642-1790")),
+    person("Delaney", "Peterson", role = "ctb", comment = c(ORCID = "0000-0002-3444-4772")),
+    person("Sarah", "Godsey", role = "ctb", comment = c(ORCID = "0000-0001-6529-7886"))
   ))
 Description: STICr (pronounced "sticker") includes a collection of functions for tidying and processing raw data from Stream Temperature, Intermittency, and Conductivity (STIC) loggers. These include functions for tidying the raw data from the loggers (tidy_hobo_data), creating a calibration model object from calibration standard data (get_calibration), apply this object to generate a column for specific conductivity (apply_calibration), and create a binary wet/dry column (classify_wetdry).
 License: AGPL (>= 3)

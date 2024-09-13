@@ -1,9 +1,9 @@
 Package: STICr
 Type: Package
-Title: Process stream temperature, intermittency, and conductivity (STIC) sensor data
+Title: Process data from stream temperature, intermittency, and conductivity (STIC) data loggers
 Authors@R: as.person(c(
-    person("Christopher T.", "Wheeler", email = "christopher.wheeler@ku.edu", role = c("aut")),
     person("Sam", "Zipper", email = "samzipper@ku.edu", role = c("aut", "cre"), comment = c(ORCID = "0000-0002-8735-5757")),
+    person("Christopher T.", "Wheeler", email = "christopher.wheeler@ku.edu", role = c("aut")),
     person("Stephen", "Cook", role = "ctb"),
     person("Delaney", "Peterson", role = "ctb"),
     person("Sarah", "Godsey", role = "ctb")
@@ -20,7 +20,5 @@ Depends: R (>= 4.2)
 Imports: 
     dplyr,
     lubridate,
-    data.table,
-    ggplot2,
     stringr,
     tidyr

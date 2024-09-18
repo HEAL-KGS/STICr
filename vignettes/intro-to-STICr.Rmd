@@ -1,0 +1,162 @@
+---
+title: "Introduction to STICr"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to STICr}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+The goal of STICr is to provide a standardized set of functions for working with data from Stream Temperature, Intermittency, and Conductivity (STIC) loggers, first described in [Chapin et al. (2014)](http://onlinelibrary.wiley.com/doi/10.1002/2013WR015158/abstract). STICs and other intermittency sensors are becoming more popular, but their raw data output is not in a form that allows for convenient analysis. In this vignette, we will walk through some typical processing steps, starting from the raw STIC model output and ending with classified and visualized STIC data.
+
+## Let's get going - load STICr!
+
+```{r setup}
+#install.packages("STICr")  # if needed: install package from CRAN
+#devtools::install_github("HEAL-KGS/STICr") # if needed: install dev version from GitHub
+library(STICr)
+```
+
+## Tidying raw STIC data
+
+STICs are created from modified HOBO Pendant loggers (see [instructions for how to do this here](https://osf.io/dfw3x)), and as a result the raw data downloaded from the STIC logger comes in a proprietary .hobo format. Before using STICr, you must use the [HOBOware software](https://www.onsetcomp.com/products/software/hoboware) to export the STIC output data as a CSV file. STICr can then use `tidy_hobo_data()` to get this into an R-friendly tidy format. We will also use the `convert_utc` argument to ensure that the data are converted from local time to UTC. 
+
+```{r tidy-data}
+
+# use tidy_hobo_data to load and tidy your raw HOBO data
+df_tidy <-
+   tidy_hobo_data(infile = "https://samzipper.com/data/raw_hobo_data.csv",
+                  outfile = FALSE, convert_utc = TRUE)
+
+head(df_tidy)
+```
+
+The output of `tidy_hobo_data()` is a data frame with 3 columns: 
+
+ - `datetime` = the date and time of the STIC measurement (in this case, converted to UTC).
+ - `condUncal` = the STIC conductivity reading, which is an uncalibrated, sensor-specific relative conductivity measurement.
+ - `tempC` = the STIC temperature reading in degrees celsius.
+
+## Calibrating STIC data
+
+Since the raw STIC data is in a sensor-specific relative conductivity value, it can often be useful to calibrate STIC loggers. This involves taking STIC readings in the lab with the sensor immersed in standards with known specific conductivity - [detailed instructions for how to do this can be found here.](https://osf.io/uh8ws). STICr can then use the `get_calibration()` and `apply_calibration()` functions to take these lab standard measurements and apply them to the STIC sensor output data.
+
+```{r load-calibration-data}
+
+# inspect the example calibration standard data provided with the package
+data(calibration_standard_data)
+head(calibration_standard_data)
+
+```
+
+The calibration standard data has three columns:
+
+ - `sensor` = an identifier or serial number for the STIC sensor, since the calibration differs for each sensor.
+ - `standard` = the specific conductivity for the lab standard data used for calibration.
+ - `condUncal` = the uncalibrated conductivity data reading by the STIC sensor when immersed in the standard.
+ 
+Using this calibration standard data, we can then create a calibration curve using the `get_calibration()` function and apply it to our data using the `apply_calibration()` function. Currently, `get_calibration()` only allows for a linear calibration curve.
+
+```{r get-calibration}
+
+# get calibration
+lm_calibration <- get_calibration(calibration_standard_data)
+summary(lm_calibration)
+
+```
+
+This sensor has a very strong calibration, with an R^2 > 0.99. We can now apply this to the tidied STIC data we loaded earlier. We will use the `outside_range_flag` argument to flag any data points that are outside the range of the standards used to develop the calibration curve, as these should be treated with caution.
+
+```{r apply-calibration}
+
+# apply calibration
+df_calibrated <- apply_calibration(stic_data = df_tidy, 
+                                   calibration = lm_calibration, 
+                                   outside_std_range_flag = T)
+
+head(df_calibrated)
+
+```
+
+We now have two additional columns in our STIC data frame: 
+
+ - `SpC` = the calibrated specific conductivity value at each timestep.
+ - `outside_range` = a flag indicating whether the STIC data was within the range of the standards used for calibration (column is empty) or outside the range of the standards (column has an `O`).
+
+## Classify the data
+
+Many people use STIC sensors to monitor when a stream is wet or dry, based on the principle that the conductivity of water is much higher than that of air. Therefore, high values of `condUncal` and/or `SpC` can be classified as wet conditions, and low values can be classified as dry conditions. In STICr, this can be done using the `classify_wetdry()` function, but this requires determining a suitable threshold to use for differentiating wet and dry conditions from the STIC data. It is typically useful to plot the data to determine this threshold.
+
+```{r plot-calibrated-data, fig.width = 6, fig.height = 4}
+
+# plot SpC as a timeseries and histogram
+plot(df_calibrated$datetime, df_calibrated$SpC, xlab = "Datetime", ylab = "SpC", main = "Specific Conductivity Timeseries")
+hist(df_calibrated$SpC, xlab = "Specific Conductivity", breaks = seq(0, 1025, 25), main = "Specific Conductivity Distribution")
+
+```
+
+It can be unclear when exactly the sensor is wet or dry, particularly if the sensor has been buried by deposited sediments (which have an intermediate conductivity between water and air). In this case, there is a clear abundance of points with SpC < 100, which we will use for our classification threshold. 
+
+```{r classify-data}
+
+# classify data
+df_classified <- classify_wetdry(stic_data = df_calibrated,
+                                 classify_var = "SpC",
+                                 threshold = 100,
+                                 method = "absolute")
+head(df_classified)
+
+```
+
+We now have a new column, `wetdry`, which reads "wet" when `SpC` exceeds the threshold and "dry" when `SpC` is less than the threshold. We can plot and visualize the classified data.
+
+```{r plot-classified-data, fig.width = 6, fig.height = 4}
+
+# plot SpC through time, colored by wetdry
+plot(df_classified$datetime, df_classified$SpC,
+  col = as.factor(df_classified$wetdry),
+  pch = 16,
+  lty = 2,
+  xlab = "Datetime",
+  ylab = "Specific conductivity"
+)
+legend("topright", c("dry", "wet"),
+  fill = c("black", "red"), cex = 0.75
+)
+
+```
+
+## QAQC data
+
+STICr has built-in a built-in QAQC function, `qaqc_stic_data()`, to deal with some common data issues we have experienced. This function requires classified STIC data, such as that output by `classify_stic_data()`, and produces a QAQC column or columns which could include the following data flags:
+
+ - `C` = calibrated SpC value was negative and corrected to 0, flagged if `spc_neg_correction = T`.
+ - `D` = point was identified as a deviation or anomaly based on a moving window, flagged if `inspect_classification = T`. If this flag is calculated, an `anomaly_size` and `window_size` need to be set.
+ - 'O' = calibrated SpC was outside standard range, determined in `apply_calibration()`.
+
+If `concatenate_flags = T`, these flags will be combined into a single column named `QAQC`; if not, they will be separate columns. A blank 
+
+```{r qaqc-data}
+
+# apply qaqc function
+df_qaqc <- 
+  qaqc_stic_data(stic_data = df_classified,
+                 spc_neg_correction = T,
+                 inspect_classification = T, 
+                 anomaly_size = 2, 
+                 window_size = 96,
+                 concatenate_flags = T)
+head(df_qaqc)
+table(df_qaqc$QAQC)
+```
+
+We can see that there was 1 "D" flag for a potential deviation (a dry reading surrounding by wet readings) and 83 "O" points indicating the calibrated SpC was outside the range of the standards used for calibration.
+
+Because we set `concatenate_flags = T`, we now have a single column, `QAQC` that combines all flags. Using `table`, we can inspect the total number of data flags in our classified dataset. 

@@ -27,7 +27,8 @@ in the stream network
 \examples{
 trimmed_data <-
   trim_hobo_data(tidy_stic_data,
-  time_start = "2021-07-16 18:00:00",
-  time_end = "2021-07-27 01:00:00")
+    time_start = "2021-07-16 18:00:00",
+    time_end = "2021-07-27 01:00:00"
+  )
 head(trimmed_data)
 }

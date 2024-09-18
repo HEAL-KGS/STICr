@@ -24,6 +24,7 @@ This is a function to classify STIC data into a binary "wet" and "dry" column. D
 \examples{
 classified_df <-
   classify_wetdry(calibrated_stic_data,
-  classify_var = "SpC", method = "absolute", threshold = 200)
+    classify_var = "SpC", method = "absolute", threshold = 200
+  )
 head(classified_df)
 }

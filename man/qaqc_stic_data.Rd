@@ -43,8 +43,10 @@ Users also have to option to concatenate multiple flags into one column. QAQC op
 }
 \examples{
 qaqc_df <-
-  qaqc_stic_data(classified_df, spc_neg_correction = TRUE,
-  inspect_classification = TRUE, anomaly_size = 4,
-  window_size = 100, concatenate_flags = TRUE)
+  qaqc_stic_data(classified_df,
+    spc_neg_correction = TRUE,
+    inspect_classification = TRUE, anomaly_size = 4,
+    window_size = 100, concatenate_flags = TRUE
+  )
 head(qaqc_df)
 }

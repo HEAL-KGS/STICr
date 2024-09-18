@@ -19,6 +19,8 @@ This function takes a data frame with field observations of wet/dry status and S
 }
 \examples{
 data_validation_confusion_matrix <-
-  validate_stic_data(stic_data = classified_df,
-  field_observations = field_obs)
+  validate_stic_data(
+    stic_data = classified_df,
+    field_observations = field_obs
+  )
 }

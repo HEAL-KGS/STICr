@@ -6,18 +6,18 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of STICr is to provide a standardized set of functions for
-working with data from Stream Temperature, Intermittency, and
-Conductivity (STIC) loggers, first described in [Chapin et
-al. (2014)](http://onlinelibrary.wiley.com/doi/10.1002/2013WR015158/abstract).
+The goal of STICr (pronounced “sticker”) is to provide a standardized
+set of functions for working with data from Stream Temperature,
+Intermittency, and Conductivity (STIC) loggers, first described in
+[Chapin et
+al. (2014)](https://agupubs.onlinelibrary.wiley.com/doi/abs/10.1002/2013WR015158).
 STICs and other intermittency sensors are becoming more popular, but
 their raw data output is not in a form that allows for convenient
 analysis. This package aims to provide a set of functions for tidying
 the raw data from these loggers, as well as calibrating their
-conductivity measurements to specific conductivity (`SpC`).
-Additionally, the `classify_wetdry` function allows the user to define
-both a method and threshold value to generate a binary “wet/dry” data
-set.
+conductivity measurements to specific conductivity (`SpC`) and
+classifying the conductivity data to generate a classified “wet/dry”
+data set.
 
 ## Installation
 
@@ -25,8 +25,8 @@ You can install STICr from CRAN or the development version of STICr from
 [GitHub](https://github.com/HEAL-KGS/STICr) with:
 
 ``` r
-#install.packages("STICr")  # if needed: install package from CRAN
-#devtools::install_github("HEAL-KGS/STICr") # if needed: install dev version from GitHub
+# install.packages("STICr")  # if needed: install package from CRAN
+# devtools::install_github("HEAL-KGS/STICr") # if needed: install dev version from GitHub
 library(STICr)
 ```
 
@@ -38,7 +38,6 @@ package. A more detailed version is available in the package vignette.
 ### Step 1: Load data
 
 ``` r
-
 # read in raw HOBO data and tidy
 df_tidy <- tidy_hobo_data(infile = "https://samzipper.com/data/raw_hobo_data.csv", outfile = FALSE)
 head(df_tidy)
@@ -60,14 +59,15 @@ relating `spc` to the uncalibrated conductivity values measured by the
 STIC.
 
 ``` r
-
 # load calibration
 lm_calibration <- get_calibration(calibration_standard_data)
 
 # apply calibration
-df_calibrated <- apply_calibration(stic_data = df_tidy, 
-                                   calibration = lm_calibration, 
-                                   outside_std_range_flag = T)
+df_calibrated <- apply_calibration(
+  stic_data = df_tidy,
+  calibration = lm_calibration,
+  outside_std_range_flag = T
+)
 head(df_calibrated)
 #>              datetime condUncal  tempC      SpC outside_std_range
 #> 1 2021-07-16 22:00:00   88178.4 27.764 857.3845                  
@@ -81,12 +81,13 @@ head(df_calibrated)
 ### Step 3: Classify data
 
 ``` r
-
 # classify data
-df_classified <- classify_wetdry(stic_data = df_calibrated,
-                                 classify_var = "SpC",
-                                 threshold = 100,
-                                 method = "absolute")
+df_classified <- classify_wetdry(
+  stic_data = df_calibrated,
+  classify_var = "SpC",
+  threshold = 100,
+  method = "absolute"
+)
 head(df_classified)
 #>              datetime condUncal  tempC      SpC outside_std_range wetdry
 #> 1 2021-07-16 22:00:00   88178.4 27.764 857.3845                      wet
@@ -100,15 +101,16 @@ head(df_classified)
 ### Step 4: QAQC
 
 ``` r
-
 # apply qaqc function
-df_qaqc <- 
-  qaqc_stic_data(stic_data = df_classified,
-                 spc_neg_correction = T,
-                 inspect_classification = T, 
-                 anomaly_size = 2, 
-                 window_size = 96,
-                 concatenate_flags = T)
+df_qaqc <-
+  qaqc_stic_data(
+    stic_data = df_classified,
+    spc_neg_correction = T,
+    inspect_classification = T,
+    anomaly_size = 2,
+    window_size = 96,
+    concatenate_flags = T
+  )
 head(df_qaqc)
 #>              datetime condUncal  tempC      SpC wetdry QAQC
 #> 1 2021-07-16 22:00:00   88178.4 27.764 857.3845    wet     
@@ -126,7 +128,6 @@ table(df_qaqc$QAQC)
 ### Step 5: Plot classified data
 
 ``` r
-
 # plot SpC through time, colored by wetdry
 plot(df_classified$datetime, df_classified$SpC,
   col = as.factor(df_classified$wetdry),

@@ -29,4 +29,4 @@ define the package (e.g. dplyr::summarize).
 - Check on CRAN win-builder, release version: `devtools::check_win_release()`
 - Check on mac, release version: `devtools::check_mac_release()`
 - Update `cran-comments.md` and `NEWS.md`
-- Release: `devtools::release()`
+- Submit to CRAN: `devtools::submit_cran()`

@@ -15,7 +15,6 @@
 - To generate documentation: `devtools::document()`
 - To build vignettes: `devtools::build_vignettes()`
 - To install package: `devtools::install("../streamDepletr", build_vignettes = T)`
-- To check on Windows development/release versions; `devtools::check_win_devel()`, `devtools::check_win_release()`
 
 # Style
 Goal: common style among all functions within the package. 

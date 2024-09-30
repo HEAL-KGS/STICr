@@ -15,7 +15,6 @@
 - To generate documentation: `devtools::document()`
 - To build vignettes: `devtools::build_vignettes()`
 - To install package: `devtools::install("../streamDepletr", build_vignettes = T)`
-- To check on Windows development/release versions; `devtools::check_win_devel()`, `devtools::check_win_release()`
 
 # Style
 Goal: common style among all functions within the package. 
@@ -30,4 +29,4 @@ define the package (e.g. dplyr::summarize).
 - Check on CRAN win-builder, release version: `devtools::check_win_release()`
 - Check on mac, release version: `devtools::check_mac_release()`
 - Update `cran-comments.md` and `NEWS.md`
-- Release: `devtools::release()`
+- Submit to CRAN: `devtools::submit_cran()`

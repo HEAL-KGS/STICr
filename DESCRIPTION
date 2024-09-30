@@ -8,7 +8,7 @@ Authors@R: c(
     person("Delaney", "Peterson", role = "ctb", comment = c(ORCID = "0000-0002-3444-4772")),
     person("Sarah", "Godsey", role = "ctb", comment = c(ORCID = "0000-0001-6529-7886"))
   )
-Description: A collection of functions for processing raw data from Stream Temperature, Intermittency, and Conductivity (STIC) loggers. STICr (pronounced ("sticker") includes functions for tidying, calibrating, classifying, and doing quality checks on data from STIC sensors. Some package functionality is described in Wheeler/Zipper et al. (2023) <doi:10.31223/X5636K>..
+Description: A collection of functions for processing raw data from Stream Temperature, Intermittency, and Conductivity (STIC) loggers. 'STICr' (pronounced "sticker") includes functions for tidying, calibrating, classifying, and doing quality checks on data from STIC sensors. Some package functionality is described in Wheeler/Zipper et al. (2023) <doi:10.31223/X5636K>.
 License: AGPL (>= 3)
 URL: https://github.com/HEAL-KGS/STICr
 BugReports: https://github.com/HEAL-KGS/STICr/issues  

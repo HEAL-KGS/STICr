@@ -142,3 +142,35 @@ legend("topright", c("dry", "wet"),
 ```
 
 <img src="man/figures/README-plot-classified-data-1.png" width="100%" />
+
+### Step 6: Compare to field observations
+
+``` r
+# create validation data frame
+stic_validation <-
+   validate_stic_data(
+     stic_data = classified_df,
+     field_observations = field_obs,
+     max_time_diff = 30,
+     join_cols = NULL,
+     get_SpC = TRUE)
+
+# compare the field observations and classified STIC data in table
+head(stic_validation)
+#>              datetime wetdry_obs  SpC_obs wetdry_STIC SpC_STIC timediff_min
+#> 1 2021-07-16 18:03:00        wet 612.1672         wet 725.7561            3
+#> 2 2021-07-19 15:01:00        wet 589.4157         wet 857.3845            1
+#> 3 2021-07-21 02:44:00        dry 599.6622         wet 831.0587           -1
+#> 4 2021-07-23 13:55:00        wet 916.8215         wet 857.3845           -5
+#> 5 2021-07-25 16:27:00        wet 631.9857         wet 752.0820           -3
+
+# calculate percent classification accuracy
+sum(stic_validation$wetdry_obs == stic_validation$wetdry_STIC)/length(stic_validation$wetdry_STIC)
+#> [1] 0.8
+
+# compare SpC as a plot
+plot(stic_validation$SpC_obs, stic_validation$SpC_STIC,
+     xlab = "Observed SpC", ylab = "STIC SpC")
+```
+
+<img src="man/figures/README-validate-data-1.png" width="100%" />

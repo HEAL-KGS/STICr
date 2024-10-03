@@ -93,8 +93,11 @@ Many people use STIC sensors to monitor when a stream is wet or dry, based on th
 
 ```{r plot-calibrated-data, fig.width = 6, fig.height = 4}
 # plot SpC as a timeseries and histogram
-plot(df_calibrated$datetime, df_calibrated$SpC, xlab = "Datetime", ylab = "SpC", main = "Specific Conductivity Timeseries")
-hist(df_calibrated$SpC, xlab = "Specific Conductivity", breaks = seq(0, 1025, 25), main = "Specific Conductivity Distribution")
+plot(df_calibrated$datetime, df_calibrated$SpC, xlab = "Datetime", ylab = "SpC", 
+     main = "Specific Conductivity Timeseries")
+
+hist(df_calibrated$SpC, xlab = "Specific Conductivity", breaks = seq(0, 1025, 25), 
+     main = "Specific Conductivity Distribution")
 ```
 
 It can be unclear when exactly the sensor is wet or dry, particularly if the sensor has been buried by deposited sediments (which have an intermediate conductivity between water and air). In this case, there is a clear abundance of points with SpC < 100, which we will use for our classification threshold. 
@@ -134,7 +137,7 @@ STICr has built-in a built-in QAQC function, `qaqc_stic_data()`, to deal with so
  - `D` = point was identified as a deviation or anomaly based on a moving window, flagged if `inspect_classification = T`. If this flag is calculated, an `anomaly_size` and `window_size` need to be set.
  - 'O' = calibrated SpC was outside standard range, determined in `apply_calibration()`.
 
-If `concatenate_flags = T`, these flags will be combined into a single column named `QAQC`; if not, they will be separate columns. A blank 
+If `concatenate_flags = T`, these flags will be combined into a single column named `QAQC`; if not, they will be separate columns. A blank value in this column means no QAQC flags were identified at that timestep.
 
 ```{r qaqc-data}
 # apply qaqc function
@@ -154,3 +157,34 @@ table(df_qaqc$QAQC)
 We can see that there was 1 "D" flag for a potential deviation (a dry reading surrounding by wet readings) and 83 "O" points indicating the calibrated SpC was outside the range of the standards used for calibration.
 
 Because we set `concatenate_flags = T`, we now have a single column, `QAQC` that combines all flags. Using `table`, we can inspect the total number of data flags in our classified dataset. 
+
+## Validate via comparison to field observations
+
+Comparing STIC data to field observations is useful to help determine the appropriate threshold that should be used for wet/dry classification and to assess confidence in the STIC data. The more field observations the better, and it is best if they span a range of wet and dry conditions at each site.
+
+```{r validate-data, fig.width = 6, fig.height = 6}
+# load and inspect sample field observation data
+head(field_obs)
+
+# use validate_stic_data to compile closest-in-time STIC reading for each field observation
+stic_validation <-
+   validate_stic_data(
+     stic_data = classified_df,
+     field_observations = field_obs,
+     max_time_diff = 30,
+     join_cols = NULL,
+     get_SpC = TRUE)
+
+# we can now compare the field observations and classified STIC data in the table
+head(stic_validation)
+
+# calculate percent classification accuracy
+sum(stic_validation$wetdry_obs == stic_validation$wetdry_STIC)/length(stic_validation$wetdry_STIC)
+
+# compare SpC
+plot(stic_validation$SpC_obs, stic_validation$SpC_STIC,
+     xlab = "Observed SpC", ylab = "STIC SpC")
+
+```
+
+In this example, we are seeing pretty good classification accuracy, but fairly poor SpC agreement.

@@ -63,7 +63,7 @@ validate_stic_data <- function(stic_data, field_observations, max_time_diff, joi
 
     # add observation
     if (length(t_diff) > 0){
-      field_observations$condUncal_STIC[i] <- stic_data_sub$condUncal_STIC[j_closest]
+      field_observations$condUncal_STIC[i] <- stic_data_sub$condUncal[j_closest]
       field_observations$wetdry_STIC[i] <- stic_data_sub$wetdry[j_closest]
       if (get_SpC) field_observations$SpC_STIC[i] <- stic_data_sub$SpC[j_closest]
       field_observations$timediff_min[i] <- t_diff

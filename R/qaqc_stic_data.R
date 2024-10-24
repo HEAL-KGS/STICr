@@ -8,29 +8,28 @@
 #' @param stic_data A data frame with classified STIC data, such as that produced by \code{classify_wetdry}.
 #' @param spc_neg_correction a logical argument indicating whether the user would like to correct negative SPC values resulting from the calibration process to 0.
 #' The character code associated with this correction is \code{"C"}.
-#' @param inspect_deviation a logical argument indicating whether the user would like to identify deviation anomalies, in which a series of wet or dry readings less than or equal to `anomaly_size` in length is surrounded on both sides by `window_size` or more observations of its opposite.
+#' @param inspect_deviation a logical argument indicating whether the user would like to identify deviation anomalies, in which a series of wet or dry readings less than or equal to `deviation_size` in length is surrounded on both sides by `window_size` or more observations of its opposite.
 #' This operation is meant to identify potentially suspect binary wet/dry data points for further examination.
 #' The character code associated with this operation is \code{"D"}.
-#' @param anomaly_size a numeric argument specifying the maximum size (i.e., number of observations) of a clustered group of points that can be flagged as an anomaly
-#' @param window_size a numeric argument specifying the minimum size (i.e., number of observations) that the anomaly must be surrounded by in order to be flagged
-#' @param concatenate_flags a logical argument indicating whether the user would like to combine the character codes generated into a single QAQC flag column.
+#' @param deviation_size a numeric argument specifying the maximum size (i.e., number of observations) of a clustered group of points that can be flagged as an deviation
+#' @param window_size a numeric argument specifying the minimum size (i.e., number of observations) that the deviation must be surrounded by in order to be flagged
 #' @import dplyr
 #'
 #' @return The same data frame as input, but with new QAQC columns or a single, concatenated QAQC column. The QAQC output
 #' Can include: \code{"C"}, meaning the calibrated SpC value was negative from `spc_neg_correction`; \code{"D"}, meaning the point was identified as
-#' a deviation or anomaly based on a moving window from `inspect_deviation`; or \code{"O"}, meaning the calibrated SpC was
+#' a deviation or deviation based on a moving window from `inspect_deviation`; or \code{"O"}, meaning the calibrated SpC was
 #' outside the standard range based on the function \code{apply_calibration}.
 #' @export
 #'
 #' @examples qaqc_df <-
 #'   qaqc_stic_data(classified_df,
 #'     spc_neg_correction = TRUE,
-#'     inspect_deviation = TRUE, anomaly_size = 4,
-#'     window_size = 96, concatenate_flags = TRUE
+#'     inspect_deviation = TRUE,
+#'     deviation_size = 4, window_size = 96
 #'   )
 #' head(qaqc_df)
 qaqc_stic_data <- function(stic_data, spc_neg_correction = TRUE, inspect_deviation = TRUE,
-                           anomaly_size, window_size, concatenate_flags = TRUE) {
+                           deviation_size = NULL, window_size = NULL) {
   # bind variables
   SpC <- NULL
 
@@ -54,45 +53,43 @@ qaqc_stic_data <- function(stic_data, spc_neg_correction = TRUE, inspect_deviati
   }
 
   if (inspect_deviation == TRUE) {
-    if (is.null(anomaly_size)) stop("Need to provide anomaly_size and window_size if inspect_deviation = TRUE")
-    if (is.null(window_size)) stop("Need to provide anomaly_size and window_size if inspect_deviation = TRUE")
+    if (is.null(deviation_size)) stop("Need to provide deviation_size and window_size if inspect_deviation = TRUE")
+    if (is.null(window_size)) stop("Need to provide deviation_size and window_size if inspect_deviation = TRUE")
 
     # Get run lengths from rle object
     rle_object <- rle(stic_data$wetdry)
     run_lengths <- rle_object$lengths
 
-    i_small <- which(run_lengths <= anomaly_size)
+    i_small <- which(run_lengths <= deviation_size)
 
-    stic_data$anomaly <- rep("", nrow(stic_data))
+    stic_data$deviation <- rep("", nrow(stic_data))
 
     for (i in i_small) {
       i_window <- run_lengths[i - 1] + run_lengths[i + 1]
 
       if (i_window > window_size) {
-        anomaly_start <- sum(run_lengths[1:(i - 1)]) + 1
-        anomaly_end <- anomaly_start + run_lengths[i] - 1
+        deviation_start <- sum(run_lengths[1:(i - 1)]) + 1
+        deviation_end <- deviation_start + run_lengths[i] - 1
 
-        stic_data[anomaly_start:anomaly_end, "anomaly"] <- "D"
+        stic_data[deviation_start:deviation_end, "deviation"] <- "D"
       }
     }
   }
 
-  if (concatenate_flags == TRUE) {
-    # concatenate the QAQC columns with col codes: "C" for negative SpC;
-    # "D" for anomalous classification; "O" for outside standard range
-    #
-    # some columns will only exist for calibrated data, so only use columns that exist
-    stic_data_qacols <-
-      stic_data |>
-      dplyr::select(any_of(c("negative_SpC", "anomaly", "outside_std_range"))) |>
-      tidyr::unite("QAQC", sep = "", na.rm = T)
+  # concatenate the QAQC columns with col codes: "C" for negative SpC;
+  # "D" for anomalous classification; "O" for outside standard range
+  #
+  # some columns will only exist for calibrated data, so only use columns that exist
+  stic_data_qacols <-
+    stic_data |>
+    dplyr::select(any_of(c("negative_SpC", "deviation", "outside_std_range"))) |>
+    tidyr::unite("QAQC", sep = "", na.rm = T)
 
-    stic_data$QAQC <- stic_data_qacols$QAQC
+  stic_data$QAQC <- stic_data_qacols$QAQC
 
-    stic_data <-
-      stic_data |>
-      dplyr::select(-any_of(c("negative_SpC", "anomaly", "outside_std_range")))
-  }
+  stic_data <-
+    stic_data |>
+    dplyr::select(-any_of(c("negative_SpC", "deviation", "outside_std_range")))
 
   return(stic_data)
 }

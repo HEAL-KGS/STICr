@@ -146,17 +146,14 @@ df_qaqc <-
     stic_data = df_classified,
     spc_neg_correction = T,
     inspect_deviation = T,
-    anomaly_size = 4,
-    window_size = 96,
-    concatenate_flags = T
+    deviation_size = 4,
+    window_size = 96
   )
 head(df_qaqc)
 table(df_qaqc$QAQC)
 ```
 
-We can see that there was 1 "D" flag for a potential deviation (a dry reading surrounding by wet readings) and 83 "O" points indicating the calibrated SpC was outside the range of the standards used for calibration.
-
-Because we set `concatenate_flags = T`, we now have a single column, `QAQC` that combines all flags. Using `table`, we can inspect the total number of data flags in our classified dataset. 
+We now have a single column, `QAQC` with all QAQC flags. We can see that there was 1 "D" flag for a potential deviation anomaly (a dry reading surrounding by wet readings) and 83 "O" points indicating the calibrated SpC was outside the range of the standards used for calibration. Using `table`, we can inspect the total number of data flags in our classified dataset. 
 
 ## Validate via comparison to field observations
 

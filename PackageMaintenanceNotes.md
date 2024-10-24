@@ -14,7 +14,7 @@
 - To style code: `Tools --> Addins --> Style package --> styler`
 - To generate documentation: `devtools::document()`
 - To build vignettes: `devtools::build_vignettes()`
-- To install package: `devtools::install("../streamDepletr", build_vignettes = T)`
+- To install package: `devtools::install("../STICr", build_vignettes = T)`
 
 # Style
 Goal: common style among all functions within the package. 

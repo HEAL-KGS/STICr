@@ -1,3 +1,10 @@
+# STICr 1.1.0
+
+## Changes
+
+ * Update `validate_stic_data` to produce a data frame, rather than directly create a confusion matrix and plot.
+ * Update documentation and defaults for `qaqc_stic_data` to require user input for certain arguments that previously had defaults, and change argument name to `inspect_deviation` to align with output code.
+
 # STICr 1.0.0
 
 ## Resubmission

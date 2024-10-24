@@ -134,7 +134,7 @@ legend("topright", c("dry", "wet"),
 STICr has built-in a built-in QAQC function, `qaqc_stic_data()`, to deal with some common data issues we have experienced. This function requires classified STIC data, such as that output by `classify_stic_data()`, and produces a QAQC column or columns which could include the following data flags:
 
  - `C` = calibrated SpC value was negative and corrected to 0, flagged if `spc_neg_correction = T`.
- - `D` = point was identified as a deviation or anomaly based on a moving window, flagged if `inspect_classification = T`. If this flag is calculated, an `anomaly_size` and `window_size` need to be set.
+ - `D` = point was identified as a deviation or anomaly based on a moving window, flagged if `inspect_deviation = T`. If this flag is calculated, an `anomaly_size` and `window_size` need to be set.
  - 'O' = calibrated SpC was outside standard range, determined in `apply_calibration()`.
 
 If `concatenate_flags = T`, these flags will be combined into a single column named `QAQC`; if not, they will be separate columns. A blank value in this column means no QAQC flags were identified at that timestep.
@@ -145,8 +145,8 @@ df_qaqc <-
   qaqc_stic_data(
     stic_data = df_classified,
     spc_neg_correction = T,
-    inspect_classification = T,
-    anomaly_size = 2,
+    inspect_deviation = T,
+    anomaly_size = 4,
     window_size = 96,
     concatenate_flags = T
   )

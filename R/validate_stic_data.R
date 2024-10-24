@@ -2,7 +2,7 @@
 #'
 #' @description This function takes a data frame with field observations of wet/dry status and SpC and generates both a confusion matrix for the wet/dry observations and a scatterplot comparing estimated SpC from the STICs to field-measured values.
 #'
-#' @param stic_data classified STIC data frame with the variable names of that produced by \link{classify_wetdry}. At a minimum, there must be \code{datetime} and \code{wetdry} columns, and an \code{SpC} column if \code{get_SpC = T}.
+#' @param stic_data classified STIC data frame with the variable names of that produced by \link{classify_wetdry}. At a minimum, there must be \code{datetime}, \code{condUncal}, and \code{wetdry} columns, and an \code{SpC} column if \code{get_SpC = T}.
 #' @param field_observations The input data frame of field observations must include a \code{datetime} column (in POSIXct format), as well as a column labeled \code{wetdry} consisting of the character strings “wet” or “dry” (as in the processed STIC data itself). Additionally, if field data on SpC was collected (e.g., with a sonde), this should be included as a third column called \code{SpC}, and units should be in µS/cm.
 #' @param max_time_diff Maximum allowed time difference (in minutes) between field observation and STIC reading to be counted as a match.
 #' @param join_cols A named vector of columns that need to be matched between \code{stic_data} and \code{field_observations} in addition to datetime. This could include, for instance, a column specifying the site at which the observation was collected. Should be in the format of \code{c("col_name_in_stic_data" = "col_name_in_field_observations")} and can have as many columns as desired. If there are no additional columns to be matched, set to \code{NULL}.
@@ -39,6 +39,7 @@ validate_stic_data <- function(stic_data, field_observations, max_time_diff, joi
                            join_cols)))
 
   # initialize fields to get from STIC data
+  field_observations$condUncal_STIC <- NA
   field_observations$wetdry_STIC <- NA
   if (get_SpC) field_observations$SpC_STIC <- NA
   field_observations$timediff_min <- NA
@@ -62,6 +63,7 @@ validate_stic_data <- function(stic_data, field_observations, max_time_diff, joi
 
     # add observation
     if (length(t_diff) > 0){
+      field_observations$condUncal_STIC[i] <- stic_data_sub$condUncal[j_closest]
       field_observations$wetdry_STIC[i] <- stic_data_sub$wetdry[j_closest]
       if (get_SpC) field_observations$SpC_STIC[i] <- stic_data_sub$SpC[j_closest]
       field_observations$timediff_min[i] <- t_diff

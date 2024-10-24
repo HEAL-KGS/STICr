@@ -13,7 +13,7 @@ validate_stic_data(
 )
 }
 \arguments{
-\item{stic_data}{classified STIC data frame with the variable names of that produced by \link{classify_wetdry}. At a minimum, there must be \code{datetime} and \code{wetdry} columns, and an \code{SpC} column if \code{get_SpC = T}.}
+\item{stic_data}{classified STIC data frame with the variable names of that produced by \link{classify_wetdry}. At a minimum, there must be \code{datetime}, \code{condUncal}, and \code{wetdry} columns, and an \code{SpC} column if \code{get_SpC = T}.}
 
 \item{field_observations}{The input data frame of field observations must include a \code{datetime} column (in POSIXct format), as well as a column labeled \code{wetdry} consisting of the character strings “wet” or “dry” (as in the processed STIC data itself). Additionally, if field data on SpC was collected (e.g., with a sonde), this should be included as a third column called \code{SpC}, and units should be in µS/cm.}
 

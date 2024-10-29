@@ -59,7 +59,11 @@ qaqc_stic_data <- function(stic_data, spc_neg_correction = TRUE, inspect_deviati
     rle_object <- rle(stic_data$wetdry)
     run_lengths <- rle_object$lengths
 
+    # find any run_lengths smaller than deviation size
     i_small <- which(run_lengths <= deviation_size)
+
+    # can't have it be the first or last run - need to get rid of
+    i_small <- i_small[!(i_small %in% c(1, length(run_lengths)))]
 
     stic_data$deviation <- rep("", nrow(stic_data))
 

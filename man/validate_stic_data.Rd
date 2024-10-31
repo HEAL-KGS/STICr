@@ -9,7 +9,8 @@ validate_stic_data(
   field_observations,
   max_time_diff,
   join_cols,
-  get_SpC
+  get_SpC,
+  get_QAQC
 )
 }
 \arguments{
@@ -21,7 +22,9 @@ validate_stic_data(
 
 \item{join_cols}{A named vector of columns that need to be matched between \code{stic_data} and \code{field_observations} in addition to datetime. This could include, for instance, a column specifying the site at which the observation was collected. Should be in the format of \code{c("col_name_in_stic_data" = "col_name_in_field_observations")} and can have as many columns as desired. If there are no additional columns to be matched, set to \code{NULL}.}
 
-\item{get_SpC}{Logical flag whether to get STIC data for SpC (\code{T}) or not (\code{T}). You must have an \code{SpC} column in both \code{stic_data} and \code{field_observations} if this is used.}
+\item{get_SpC}{Logical flag whether to get STIC data for SpC (\code{T}) or not (\code{T}). You must have an \code{SpC} column in \code{stic_data} and \code{field_observations} if this is used.}
+
+\item{get_QAQC}{Logical flag whether to get the STIC QAQC data (\code{T}) or not (\code{T}). You must have an \code{QAQC} column in both \code{stic_data} if this is used.}
 }
 \value{
 The \code{field_observations} data frame with new columns indicating the closest-in-time STIC wetdry classification (\code{wetdry_STIC}), SpC measurement (\code{SpC_STIC}; only if \code{get_SpC = T}), and time difference between the field observation and STIC reading (\code{timediff_min}).
@@ -36,6 +39,7 @@ stic_validation <-
     field_observations = field_obs,
     max_time_diff = 30,
     join_cols = NULL,
-    get_SpC = TRUE
+    get_SpC = TRUE,
+    get_QAQC = FALSE
   )
 }

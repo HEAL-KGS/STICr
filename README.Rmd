@@ -115,7 +115,8 @@ stic_validation <-
      field_observations = field_obs,
      max_time_diff = 30,
      join_cols = NULL,
-     get_SpC = TRUE)
+     get_SpC = TRUE,
+     get_QAQC = FALSE)
 
 # compare the field observations and classified STIC data in table
 head(stic_validation)

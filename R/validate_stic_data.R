@@ -6,7 +6,8 @@
 #' @param field_observations The input data frame of field observations must include a \code{datetime} column (in POSIXct format), as well as a column labeled \code{wetdry} consisting of the character strings “wet” or “dry” (as in the processed STIC data itself). Additionally, if field data on SpC was collected (e.g., with a sonde), this should be included as a third column called \code{SpC}, and units should be in µS/cm.
 #' @param max_time_diff Maximum allowed time difference (in minutes) between field observation and STIC reading to be counted as a match.
 #' @param join_cols A named vector of columns that need to be matched between \code{stic_data} and \code{field_observations} in addition to datetime. This could include, for instance, a column specifying the site at which the observation was collected. Should be in the format of \code{c("col_name_in_stic_data" = "col_name_in_field_observations")} and can have as many columns as desired. If there are no additional columns to be matched, set to \code{NULL}.
-#' @param get_SpC Logical flag whether to get STIC data for SpC (\code{T}) or not (\code{T}). You must have an \code{SpC} column in both \code{stic_data} and \code{field_observations} if this is used.
+#' @param get_SpC Logical flag whether to get STIC data for SpC (\code{T}) or not (\code{T}). You must have an \code{SpC} column in \code{stic_data} and \code{field_observations} if this is used.
+#' @param get_QAQC Logical flag whether to get the STIC QAQC data (\code{T}) or not (\code{T}). You must have an \code{QAQC} column in both \code{stic_data} if this is used.
 #'
 #' @return The \code{field_observations} data frame with new columns indicating the closest-in-time STIC wetdry classification (\code{wetdry_STIC}), SpC measurement (\code{SpC_STIC}; only if \code{get_SpC = T}), and time difference between the field observation and STIC reading (\code{timediff_min}).
 #' @export
@@ -17,9 +18,10 @@
 #'     field_observations = field_obs,
 #'     max_time_diff = 30,
 #'     join_cols = NULL,
-#'     get_SpC = TRUE
+#'     get_SpC = TRUE,
+#'     get_QAQC = FALSE
 #'   )
-validate_stic_data <- function(stic_data, field_observations, max_time_diff, join_cols, get_SpC) {
+validate_stic_data <- function(stic_data, field_observations, max_time_diff, join_cols, get_SpC, get_QAQC) {
 
   # bind variables
   datetime <- wetdry <- SpC <- timediff_min <- NULL
@@ -30,6 +32,7 @@ validate_stic_data <- function(stic_data, field_observations, max_time_diff, joi
 
   if (get_SpC & !("SpC" %in% names(stic_data))) stop("get_SpC = T but no SpC column in stic_data")
   if (get_SpC & !("SpC" %in% names(field_observations))) stop("get_SpC = T but no SpC column in field_observations")
+  if (get_QAQC & !("QAQC" %in% names(stic_data))) stop("get_QAQC = T but no QAQC column in stic_data")
 
   # rename field observations as needed
   field_observations <-
@@ -42,6 +45,7 @@ validate_stic_data <- function(stic_data, field_observations, max_time_diff, joi
   field_observations$condUncal_STIC <- NA
   field_observations$wetdry_STIC <- NA
   if (get_SpC) field_observations$SpC_STIC <- NA
+  if (get_QAQC) field_observations$QAQC_STIC <- NA
   field_observations$timediff_min <- NA
 
   # for each field observation, find closest field measurement
@@ -66,6 +70,7 @@ validate_stic_data <- function(stic_data, field_observations, max_time_diff, joi
       field_observations$condUncal_STIC[i] <- stic_data_sub$condUncal[j_closest]
       field_observations$wetdry_STIC[i] <- stic_data_sub$wetdry[j_closest]
       if (get_SpC) field_observations$SpC_STIC[i] <- stic_data_sub$SpC[j_closest]
+      if (get_QAQC) field_observations$QAQC_STIC[i] <- stic_data_sub$QAQC[j_closest]
       field_observations$timediff_min[i] <- t_diff
     }
 

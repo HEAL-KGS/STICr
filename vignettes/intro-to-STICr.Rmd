@@ -93,11 +93,15 @@ Many people use STIC sensors to monitor when a stream is wet or dry, based on th
 
 ```{r plot-calibrated-data, fig.width = 6, fig.height = 4}
 # plot SpC as a timeseries and histogram
-plot(df_calibrated$datetime, df_calibrated$SpC, xlab = "Datetime", ylab = "SpC", 
-     main = "Specific Conductivity Timeseries")
+plot(df_calibrated$datetime, df_calibrated$SpC,
+  xlab = "Datetime", ylab = "SpC",
+  main = "Specific Conductivity Timeseries"
+)
 
-hist(df_calibrated$SpC, xlab = "Specific Conductivity", breaks = seq(0, 1025, 25), 
-     main = "Specific Conductivity Distribution")
+hist(df_calibrated$SpC,
+  xlab = "Specific Conductivity", breaks = seq(0, 1025, 25),
+  main = "Specific Conductivity Distribution"
+)
 ```
 
 It can be unclear when exactly the sensor is wet or dry, particularly if the sensor has been buried by deposited sediments (which have an intermediate conductivity between water and air). In this case, there is a clear abundance of points with SpC < 100, which we will use for our classification threshold. 
@@ -165,24 +169,25 @@ head(field_obs)
 
 # use validate_stic_data to compile closest-in-time STIC reading for each field observation
 stic_validation <-
-   validate_stic_data(
-     stic_data = classified_df,
-     field_observations = field_obs,
-     max_time_diff = 30,
-     join_cols = NULL,
-     get_SpC = TRUE,
-     get_QAQC = FALSE)
+  validate_stic_data(
+    stic_data = classified_df,
+    field_observations = field_obs,
+    max_time_diff = 30,
+    join_cols = NULL,
+    get_SpC = TRUE,
+    get_QAQC = FALSE
+  )
 
 # we can now compare the field observations and classified STIC data in the table
 head(stic_validation)
 
 # calculate percent classification accuracy
-sum(stic_validation$wetdry_obs == stic_validation$wetdry_STIC)/length(stic_validation$wetdry_STIC)
+sum(stic_validation$wetdry_obs == stic_validation$wetdry_STIC) / length(stic_validation$wetdry_STIC)
 
 # compare SpC
 plot(stic_validation$SpC_obs, stic_validation$SpC_STIC,
-     xlab = "Observed SpC", ylab = "STIC SpC")
-
+  xlab = "Observed SpC", ylab = "STIC SpC"
+)
 ```
 
 In this example, we are seeing pretty good classification accuracy, but fairly poor SpC agreement.

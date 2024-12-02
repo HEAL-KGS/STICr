@@ -22,7 +22,6 @@
 #'     get_QAQC = FALSE
 #'   )
 validate_stic_data <- function(stic_data, field_observations, max_time_diff, join_cols, get_SpC, get_QAQC) {
-
   # bind variables
   datetime <- wetdry <- SpC <- timediff_min <- NULL
 
@@ -37,9 +36,11 @@ validate_stic_data <- function(stic_data, field_observations, max_time_diff, joi
   # rename field observations as needed
   field_observations <-
     field_observations |>
-    dplyr::rename(any_of(c(wetdry_obs = "wetdry",
-                           SpC_obs = "SpC",
-                           join_cols)))
+    dplyr::rename(any_of(c(
+      wetdry_obs = "wetdry",
+      SpC_obs = "SpC",
+      join_cols
+    )))
 
   # initialize fields to get from STIC data
   field_observations$condUncal_STIC <- NA
@@ -49,14 +50,14 @@ validate_stic_data <- function(stic_data, field_observations, max_time_diff, joi
   field_observations$timediff_min <- NA
 
   # for each field observation, find closest field measurement
-  for (i in 1:length(field_observations$wetdry_obs)){
+  for (i in 1:length(field_observations$wetdry_obs)) {
     # get time of field observation
     time_obs <- field_observations$datetime[i]
 
     # subset stic data based on other join columns
     stic_data_sub <- stic_data
-    if (!is.null(join_cols)){
-      for (k in 1:length(join_cols)){
+    if (!is.null(join_cols)) {
+      for (k in 1:length(join_cols)) {
         stic_data_sub <- stic_data_sub[stic_data_sub[, names(join_cols)[k]] == as.character(field_observations[i, names(join_cols)[k]]), ]
       }
     }
@@ -66,14 +67,13 @@ validate_stic_data <- function(stic_data, field_observations, max_time_diff, joi
     t_diff <- as.numeric(difftime(time_obs, stic_data_sub$datetime[j_closest], units = "mins"))
 
     # add observation
-    if (length(t_diff) > 0){
+    if (length(t_diff) > 0) {
       field_observations$condUncal_STIC[i] <- stic_data_sub$condUncal[j_closest]
       field_observations$wetdry_STIC[i] <- stic_data_sub$wetdry[j_closest]
       if (get_SpC) field_observations$SpC_STIC[i] <- stic_data_sub$SpC[j_closest]
       if (get_QAQC) field_observations$QAQC_STIC[i] <- stic_data_sub$QAQC[j_closest]
       field_observations$timediff_min[i] <- t_diff
     }
-
   }
 
   # get rid of any with timediff exceeding threshold or NA timediff

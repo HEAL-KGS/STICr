@@ -110,22 +110,23 @@ legend("topright", c("dry", "wet"),
 ```{r validate-data}
 # create validation data frame
 stic_validation <-
-   validate_stic_data(
-     stic_data = classified_df,
-     field_observations = field_obs,
-     max_time_diff = 30,
-     join_cols = NULL,
-     get_SpC = TRUE,
-     get_QAQC = FALSE)
+  validate_stic_data(
+    stic_data = classified_df,
+    field_observations = field_obs,
+    max_time_diff = 30,
+    join_cols = NULL,
+    get_SpC = TRUE,
+    get_QAQC = FALSE
+  )
 
 # compare the field observations and classified STIC data in table
 head(stic_validation)
 
 # calculate percent classification accuracy
-sum(stic_validation$wetdry_obs == stic_validation$wetdry_STIC)/length(stic_validation$wetdry_STIC)
+sum(stic_validation$wetdry_obs == stic_validation$wetdry_STIC) / length(stic_validation$wetdry_STIC)
 
 # compare SpC as a plot
 plot(stic_validation$SpC_obs, stic_validation$SpC_STIC,
-     xlab = "Observed SpC", ylab = "STIC SpC")
-
+  xlab = "Observed SpC", ylab = "STIC SpC"
+)
 ```

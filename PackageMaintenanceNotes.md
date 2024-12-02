@@ -10,8 +10,8 @@
 - http://www.masalmon.eu/2017/12/11/goodrpackages/
 
 - To add a dependency: `devtools::use_package("packageName")`
+- To style code: `styler:::style_active_pkg()`
 - To check package: `devtools::check()`
-- To style code: `Tools --> Addins --> Style package --> styler`
 - To generate documentation: `devtools::document()`
 - To build vignettes: `devtools::build_vignettes()`
 - To install package: `devtools::install("../STICr", build_vignettes = T)`

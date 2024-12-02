@@ -1,9 +1,31 @@
 # STICr 1.1.0
 
-## Changes
-
+## Resubmission
+ * This is an updated minor release of STICr intended to improve functionality.
  * Update `validate_stic_data` to produce a data frame, rather than directly create a confusion matrix and plot.
  * Update documentation and defaults for `qaqc_stic_data` to require user input for certain arguments that previously had defaults, and change argument name to `inspect_deviation` to align with output code.
+
+## Test environments
+ * local windows 11 install, R 4.4.1
+ * r-devel-macosx-arm64 | 4.4.0 | macosx | macOS 13.3.1 (22E261) | (on mac-builder)
+ * r-devel-x86_64-w64-mingw32 | 2024-09-25 r87194 ucrt | Windows Server 2022 x64 (build 20348) | (on win-builder)
+ * r-release-x86_64-w64-mingw32 | 4.4.1 | Windows Server 2022 x64 (build 20348) | (on win-builder)
+ 
+## R CMD check results
+
+### local windows 11 install
+
+0 errors | 0 warnings | 0 notes
+
+### r-devel-macosx-arm64
+
+
+
+### r-devel-x86_64-w64-mingw32
+
+
+### r-release-x86_64-w64-mingw32
+
 
 # STICr 1.0.0
 

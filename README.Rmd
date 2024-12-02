@@ -80,10 +80,9 @@ df_qaqc <-
   qaqc_stic_data(
     stic_data = df_classified,
     spc_neg_correction = T,
-    inspect_classification = T,
-    anomaly_size = 2,
-    window_size = 96,
-    concatenate_flags = T
+    inspect_deviation = T,
+    deviation_size = 2,
+    window_size = 96
   )
 head(df_qaqc)
 table(df_qaqc$QAQC)

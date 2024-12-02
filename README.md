@@ -106,10 +106,9 @@ df_qaqc <-
   qaqc_stic_data(
     stic_data = df_classified,
     spc_neg_correction = T,
-    inspect_classification = T,
-    anomaly_size = 2,
-    window_size = 96,
-    concatenate_flags = T
+    inspect_deviation = T,
+    deviation_size = 2,
+    window_size = 96
   )
 head(df_qaqc)
 #>              datetime condUncal  tempC      SpC wetdry QAQC
@@ -148,29 +147,38 @@ legend("topright", c("dry", "wet"),
 ``` r
 # create validation data frame
 stic_validation <-
-   validate_stic_data(
-     stic_data = classified_df,
-     field_observations = field_obs,
-     max_time_diff = 30,
-     join_cols = NULL,
-     get_SpC = TRUE)
+  validate_stic_data(
+    stic_data = classified_df,
+    field_observations = field_obs,
+    max_time_diff = 30,
+    join_cols = NULL,
+    get_SpC = TRUE,
+    get_QAQC = FALSE
+  )
 
 # compare the field observations and classified STIC data in table
 head(stic_validation)
-#>              datetime wetdry_obs  SpC_obs wetdry_STIC SpC_STIC timediff_min
-#> 1 2021-07-16 18:03:00        wet 612.1672         wet 725.7561            3
-#> 2 2021-07-19 15:01:00        wet 589.4157         wet 857.3845            1
-#> 3 2021-07-21 02:44:00        dry 599.6622         wet 831.0587           -1
-#> 4 2021-07-23 13:55:00        wet 916.8215         wet 857.3845           -5
-#> 5 2021-07-25 16:27:00        wet 631.9857         wet 752.0820           -3
+#>              datetime wetdry_obs  SpC_obs condUncal_STIC wetdry_STIC SpC_STIC
+#> 1 2021-07-16 18:03:00        wet 612.1672        74400.5         wet 725.7561
+#> 2 2021-07-19 15:01:00        wet 589.4157        88178.4         wet 857.3845
+#> 3 2021-07-21 02:44:00        dry 599.6622        85422.8         wet 831.0587
+#> 4 2021-07-23 13:55:00        wet 916.8215        88178.4         wet 857.3845
+#> 5 2021-07-25 16:27:00        wet 631.9857        77156.1         wet 752.0820
+#>   timediff_min
+#> 1            3
+#> 2            1
+#> 3           -1
+#> 4           -5
+#> 5           -3
 
 # calculate percent classification accuracy
-sum(stic_validation$wetdry_obs == stic_validation$wetdry_STIC)/length(stic_validation$wetdry_STIC)
+sum(stic_validation$wetdry_obs == stic_validation$wetdry_STIC) / length(stic_validation$wetdry_STIC)
 #> [1] 0.8
 
 # compare SpC as a plot
 plot(stic_validation$SpC_obs, stic_validation$SpC_STIC,
-     xlab = "Observed SpC", ylab = "STIC SpC")
+  xlab = "Observed SpC", ylab = "STIC SpC"
+)
 ```
 
 <img src="man/figures/README-validate-data-1.png" width="100%" />

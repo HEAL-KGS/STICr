@@ -8,8 +8,8 @@
 ## Test environments
  * local windows 11 install, R 4.4.1
  * r-devel-macosx-arm64 | 4.4.0 | macosx | macOS 13.3.1 (22E261) | (on mac-builder)
- * r-devel-x86_64-w64-mingw32 | 2024-09-25 r87194 ucrt | Windows Server 2022 x64 (build 20348) | (on win-builder)
- * r-release-x86_64-w64-mingw32 | 4.4.1 | Windows Server 2022 x64 (build 20348) | (on win-builder)
+ * r-devel-x86_64-w64-mingw32 | 2024-12-01 r87412 ucrt | Windows Server 2022 x64 (build 20348) | (on win-builder)
+ * r-release-x86_64-w64-mingw32 | 4.4.2 | Windows Server 2022 x64 (build 20348) | (on win-builder)
  
 ## R CMD check results
 
@@ -19,13 +19,19 @@
 
 ### r-devel-macosx-arm64
 
-
+0 errors | 0 warnings | 0 notes
 
 ### r-devel-x86_64-w64-mingw32
 
+0 errors | 0 warnings | 1 note
+
+NOTE: 'Checking incoming CRAN feasibility' returns 1 note: Possibly invalid URL.
+
+RESPONSE: The URL was manually checked and confirmed to be valid. 
 
 ### r-release-x86_64-w64-mingw32
 
+0 errors | 0 warnings | 0 notes
 
 # STICr 1.0.0
 

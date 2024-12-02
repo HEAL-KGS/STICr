@@ -26,6 +26,7 @@ define the package (e.g. dplyr::summarize).
 # Prepping for release
 - Release steps: https://r-pkgs.org/release.html
 - Set release: `usethis::use_release_issue()`
+- Update version: `usethis::use_version('minor')`
 - Check on local machine: `devtools::check()`
 - Check on CRAN win-builder, devel version: `devtools::check_win_devel()`
 - Check on CRAN win-builder, release version: `devtools::check_win_release()`

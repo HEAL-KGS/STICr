@@ -7,7 +7,7 @@
 apply_calibration(stic_data, calibration, outside_std_range_flag = TRUE)
 }
 \arguments{
-\item{stic_data}{A data frame with a column named \code{condUncal}, for example as produced by the function \link{tidy_hobo_data}.}
+\item{stic_data}{A data frame with a column named \code{condUncal} (units: lux), for example as produced by the function \link{tidy_hobo_data}.}
 
 \item{calibration}{a model object relating \code{condUncal} to a standard of some sort, for example as produced by the function \link{get_calibration}.}
 

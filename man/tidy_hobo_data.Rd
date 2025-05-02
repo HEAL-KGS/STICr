@@ -14,7 +14,7 @@ tidy_hobo_data(infile, outfile = FALSE, convert_utc = TRUE)
 \item{convert_utc}{a logical argument indicating whether the user would like to convert from the time zone associated with their CSV to UTC}
 }
 \value{
-a tidied data frame with the following column names: \code{datetime}, \code{condUncal}, \code{tempC}.
+a tidied data frame with the following column names: \code{datetime}, \code{condUncal} (uncalibrated conductivity, units: lux), \code{tempC} (temperature, units: degrees Celsius).
 }
 \description{
 This function loads raw HOBO STIC CSV files and cleans up columns and headers

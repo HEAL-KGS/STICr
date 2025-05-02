@@ -7,7 +7,7 @@
 get_calibration(calibration_data)
 }
 \arguments{
-\item{calibration_data}{STIC calibration data frame with columns \code{"standard"} and \code{"condUncal"}.}
+\item{calibration_data}{STIC calibration data frame with columns \code{"standard"} (units: µS/cm) and \code{"condUncal"} (units: lux).}
 }
 \value{
 A fitted \code{lm} model object relating \code{SpC} to the uncalibrated conductivity values measured by the STIC

@@ -1,0 +1,15 @@
+bibentry(
+  bibtype  = "Article",
+  title    = "STICr: An open-source package and workflow for stream temperature, intermittency, and conductivity (STIC) data",
+  author   = c(person("Sam", "Zipper"),
+    person("Christopher T.", "Wheeler"),
+    person("Stephen C.", "Cook"),
+    person("Delaney M.", "Peterson"),
+    person("Sarah E.", "Godsey"),
+    person("Ken", "Aho")),
+  journal  = "Environmental Modelling & Software",
+  year     = "2025",
+  volume   = "190",
+  pages    = "106484",
+  doi      = "10.1016/j.envsoft.2025.106484"
+)

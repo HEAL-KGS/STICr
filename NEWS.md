@@ -1,3 +1,10 @@
+# STICr 1.1.1
+
+ - Patch to updated package
+ - Bug fix in `classify_wetdry` related to y-intercept method.
+ - Add units to documentation for calibration functions.
+ - Add citation.
+
 # STICr 1.1.0
 
  - Minor release to updated package

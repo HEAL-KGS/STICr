@@ -1,6 +1,37 @@
 # STICr 1.1.0
 
 ## Resubmission
+ * This is an updated minor release of STICr with a bug fix and improved documentation.
+ * Bug fix for `y-intercept` method in `classify_wetdry`
+ * Update documentation to specify units.
+ * Updated citation.
+
+## Test environments
+ * local windows 11 install, R 4.4.3
+ * r-release-macosx-arm64|4.4.2|macosx|macOS 13.3.1 (22E261) | (on mac-builder)
+ * r-devel-x86_64-w64-mingw32 | 2025-05-01 r88184 ucrt | Windows Server 2022 x64 (build 20348) | (on win-builder)
+
+## R CMD check results
+
+### local windows 11 install
+
+0 errors | 0 warnings | 0 notes
+
+### r-devel-macosx-arm64
+
+0 errors | 0 warnings | 0 notes
+
+### r-devel-x86_64-w64-mingw32
+
+0 errors | 0 warnings | 1 note
+
+NOTE: 'Checking incoming CRAN feasibility' returns 1 note: Possibly invalid URL.
+
+RESPONSE: The URL was manually checked and confirmed to be valid. 
+
+# STICr 1.1.0
+
+## Resubmission
  * This is an updated minor release of STICr intended to improve functionality.
  * Update `validate_stic_data` to produce a data frame, rather than directly create a confusion matrix and plot.
  * Update documentation and defaults for `qaqc_stic_data` to require user input for certain arguments that previously had defaults, and change argument name to `inspect_deviation` to align with output code.
@@ -10,7 +41,7 @@
  * r-devel-macosx-arm64 | 4.4.0 | macosx | macOS 13.3.1 (22E261) | (on mac-builder)
  * r-devel-x86_64-w64-mingw32 | 2024-12-01 r87412 ucrt | Windows Server 2022 x64 (build 20348) | (on win-builder)
  * r-release-x86_64-w64-mingw32 | 4.4.2 | Windows Server 2022 x64 (build 20348) | (on win-builder)
- 
+
 ## R CMD check results
 
 ### local windows 11 install

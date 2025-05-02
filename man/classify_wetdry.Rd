@@ -9,7 +9,7 @@ classify_wetdry(stic_data, classify_var, threshold, method)
 \arguments{
 \item{stic_data}{A data frame with STIC data, such as that produced by \link{apply_calibration} or \link{tidy_hobo_data}.}
 
-\item{classify_var}{Name of the column in data frame you want to use for classification.}
+\item{classify_var}{Name of the column in data frame you want to use for classification. When \code{method} is \code{"y-intercept"}, this should be \code{condUncal}.}
 
 \item{threshold}{This is the user-defined threshold for determining wet versus dry based on the designated classification variable. If using the \code{"absolute"} method, the threshold will be a value in the same units as the designated classification variable. If using the \code{"percent"} method, the value will be a decimal percentage (range 0-1) of the max value of the classification variable in the data frame. Values above this proportion of the maximum will be designated as wet. If using the \code{"y-intercept"} method, this should be a model fit used to generate calibrated \code{SpC} values such as that produced by \link{get_calibration}.}
 

@@ -33,7 +33,7 @@ classify_wetdry <- function(stic_data, classify_var, threshold, method) {
     if (!classify_var == "condUncal") stop("Error - for y-intercept, classify_var should be condUncal")
   }
 
-  class_var <- stic_data[, classify_var]
+  class_var <- stic_data[[classify_var]]
 
   if (method == "percent") {
     if ((threshold > 1) | (threshold < 0)) stop("Error - threshold should be between 0-1")

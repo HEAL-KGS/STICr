@@ -1,3 +1,7 @@
+# STICr 1.1.2
+
+ - Patch: Fix in `classify_wetdry` to resolve reverse dependency issue with updated version of dplyr.
+ 
 # STICr 1.1.1
 
  - Patch to updated package

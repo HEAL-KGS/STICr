@@ -4,6 +4,7 @@
 # STICr
 
 <!-- badges: start -->
+
 <!-- badges: end -->
 
 The goal of STICr (pronounced “sticker”) is to provide a standardized

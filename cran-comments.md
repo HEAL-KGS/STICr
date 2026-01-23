@@ -1,4 +1,32 @@
-# STICr 1.1.0
+# STICr 1.1.2
+
+## Resubmission
+ * This is a patch to address a reverse dependency issue with an updated version of dplyr.
+
+## Test environments
+ * local windows 11 install, R 4.5.1
+ * r-devel-macosx-arm64 | 4.6.0 | macosx | macOS 26.2 (25C56) (on mac-builder)
+ * r-release-x86_64-w64-mingw32 | 4.5.2 (2025-10-31 ucrt) | Windows Server 2022 x64 (build 20348) | (on win-builder)
+
+## R CMD check results
+
+### local windows 11 install
+
+0 errors | 0 warnings | 0 notes
+
+### r-devel-macosx-arm64
+
+0 errors | 0 warnings | 0 notes
+
+### r-release-x86_64-w64-mingw32
+
+0 errors | 0 warnings | 1 note
+
+NOTE: 'Checking incoming CRAN feasibility' returns 1 note: Possibly invalid URL.
+
+RESPONSE: The URL was manually checked and confirmed to be valid. 
+
+# STICr 1.1.1
 
 ## Resubmission
  * This is an updated minor release of STICr with a bug fix and improved documentation.

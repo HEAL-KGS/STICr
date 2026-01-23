@@ -20,7 +20,7 @@
 
 ### r-release-x86_64-w64-mingw32
 
-0 errors | 0 warnings | 1 note
+0 errors | 1 warning | 0 notes
 
 NOTE: 'Checking incoming CRAN feasibility' returns 1 note: Possibly invalid URL.
 
